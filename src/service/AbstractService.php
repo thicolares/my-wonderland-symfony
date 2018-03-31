@@ -12,7 +12,7 @@ namespace MyWonderland\Service;
  * All services are singleton and stateless
  * @package MyWonderland\Service
  */
-class AbstractService
+abstract class AbstractService
 {
     protected static $instance;
 
@@ -21,7 +21,7 @@ class AbstractService
     public static function getInstance()
     {
         if (self::$instance==null) {
-            $class = __CLASS__;
+            $class = get_called_class();
             self::$instance = new $class();
         }
         return self::$instance;
