@@ -1,7 +1,7 @@
 <?php
 namespace MyWonderland;
 
-use MyWonderland\Service\SongkickManager;
+use MyWonderland\Service\SongkickService;
 
 require_once __DIR__ . '/bootstrap.php';
 

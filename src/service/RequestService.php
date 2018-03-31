@@ -12,7 +12,7 @@ use GuzzleHttp\Client;
 use phpFastCache\Core\Pool\ExtendedCacheItemPoolInterface;
 use Psr\Http\Message\ResponseInterface;
 
-class RequestManager
+class RequestService extends AbstractService
 {
     /**
      * @var ExtendedCacheItemPoolInterface
