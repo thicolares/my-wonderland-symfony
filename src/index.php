@@ -27,7 +27,7 @@ $queryStringVars = [];
 
 // Strip query string (?foo=bar) and decode URI
 if (false !== $pos = strpos($uri, '?')) {
-    $queryString = substr($uri, $pos+1,-1);
+    $queryString = substr($uri, $pos+1);
     parse_str($queryString, $queryStringVars);
     $uri = substr($uri, 0, $pos);
 }

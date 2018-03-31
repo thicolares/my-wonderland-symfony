@@ -18,7 +18,7 @@ class SpotifyAuth extends AbstractController
             '&response_type=code' .
             '&redirect_uri=' . rawurlencode($redirectUri) .
             ($scopes ? '&scope=' . rawurlencode($scopes) : '') .
-            "&state=123456";
+            '&state=' . getenv('SPOTIFY_CALLBACK_STATE');
         header('Location: ' . $baseUri . $uri);
     }
 
@@ -27,5 +27,6 @@ class SpotifyAuth extends AbstractController
         print_r($_GET);
         var_dump($code);
         var_dump($state);
+        var_dump(getenv('SPOTIFY_CALLBACK_STATE'));
     }
 }
