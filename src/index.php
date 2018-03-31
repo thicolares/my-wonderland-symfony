@@ -8,8 +8,10 @@
 
 require_once __DIR__ . '/bootstrap.php';
 
+
 $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
-    $r->addRoute('GET', '/login', \MyWonderland\Controller\Login::class . ':login');
+    $r->addRoute('GET', '/auth', \MyWonderland\Controller\SpotifyAuth::class . ':auth');
+    $r->addRoute('GET', '/callback', \MyWonderland\Controller\SpotifyAuth::class . ':callback');
 //    // {id} must be a number (\d+)
 //    $r->addRoute('GET', '/user/{id:\d+}', 'get_user_handler');
 //    // The /{title} suffix is optional
@@ -19,17 +21,18 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
 // Fetch method and URI from somewhere
 $httpMethod = $_SERVER['REQUEST_METHOD'];
 $uri = $_SERVER['REQUEST_URI'];
+$queryStringVars = [];
 
-print "$httpMethod - $uri";
+//print "$httpMethod - $uri";
 
 // Strip query string (?foo=bar) and decode URI
 if (false !== $pos = strpos($uri, '?')) {
+    $queryString = substr($uri, $pos+1,-1);
+    parse_str($queryString, $queryStringVars);
     $uri = substr($uri, 0, $pos);
 }
 $uri = rawurldecode($uri);
-
 $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
-print_r($routeInfo);
 
 switch ($routeInfo[0]) {
     case FastRoute\Dispatcher::NOT_FOUND:
@@ -43,7 +46,6 @@ switch ($routeInfo[0]) {
         $handler = $routeInfo[1];
         $vars = $routeInfo[2];
         list($class, $method) = explode(":", $handler, 2);
-        call_user_func_array(array(new $class, $method), $vars);
-
+        call_user_func_array(array(new $class, $method), $vars + $queryStringVars);
         break;
 }
