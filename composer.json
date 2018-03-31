@@ -1,0 +1,24 @@
+{
+    "name": "colares/my-wonderland",
+    "description": "Find the best place for you live regarding the music you love",
+    "type": "project",
+    "require": {
+        "webonyx/graphql-php": "^0.11.5",
+        "vlucas/phpdotenv": "^2.4"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Thiago Colares",
+            "email": "thicolares@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "MyWonderland\\": "src/",
+            "MyWonderland\\Model\\": "src/model",
+            "MyWonderland\\Service\\": "src/service",
+            "MyWonderland\\Controller\\": "src/controller"
+        }
+    }
+}
