@@ -12,16 +12,23 @@ namespace MyWonderland\Service;
 class SongkickManager
 {
     static function hw() {
-        $client = new \GuzzleHttp\Client();
-        // http://api.songkick.com/api/3.0/artists/379603/gigography.json?apikey=AfG9d5gdhJMscGjZ
+        $requestManager = new RequestManager();
+        $query = 'artists/379603/gigography.json?apikey=' . getenv('SONGKICK_API_KEY');
+        $res = $requestManager->requestContent('GET', getenv('SONGKICK_API_URI'), $query);
+        print_r(\json_encode($res));
 
-        $uri = getenv('SONGKICK_API_URI') . 'artists/379603/gigography.json?apikey=' . getenv('SONGKICK_API_KEY');
-        $res = $client->request('GET', $uri);
+
+
+        //$client = new \GuzzleHttp\Client();
+        // http://api.songkick.com/api/3.0/artists/379603/gigography.json?apikey=....
+
+
+       // $res = $client->request('GET', $uri);
         //echo $res->getStatusCode();
 // 200
         //echo $res->getHeaderLine('content-type');
 // 'application/json; charset=utf8'
-        echo $res->getBody();
+        //echo $res->getBody();
 // '{"id": 1420053, "name": "guzzle", ...}'
 
 // Send an asynchronous request.
