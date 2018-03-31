@@ -1,7 +1,7 @@
 <?php
 namespace MyWonderland\Controller;
 use GuzzleHttp\Client;
-use MyWonderland\Service\SpotifyManager;
+use MyWonderland\Service\SpotifyService;
 
 /**
  * Created by PhpStorm.
@@ -15,7 +15,7 @@ class SpotifyAuth extends AbstractController
     const REDIRECT_URI = '/callback';
 
     public function auth() {
-        $spotifyManager = new SpotifyManager();
+        $spotifyManager = SpotifyService::getInstance();
         header('Location: ' . $spotifyManager->getAuthUri());
     }
 

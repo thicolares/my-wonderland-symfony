@@ -9,7 +9,7 @@
 namespace MyWonderland\Service;
 
 
-class SpotifyManager
+class SpotifyService extends AbstractService
 {
     const REDIRECT_URI = '/callback';
     const BASE_AUTH_URI = 'https://accounts.spotify.com/authorize/';
