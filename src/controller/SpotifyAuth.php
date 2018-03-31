@@ -1,6 +1,7 @@
 <?php
 namespace MyWonderland\Controller;
 use GuzzleHttp\Client;
+use MyWonderland\Service\SpotifyManager;
 
 /**
  * Created by PhpStorm.
@@ -11,18 +12,11 @@ use GuzzleHttp\Client;
 
 class SpotifyAuth extends AbstractController
 {
-    const REDIRECT_ACTION = '/callback'; // @todo extract the base
+    const REDIRECT_URI = '/callback';
 
     public function auth() {
-        $baseUri = 'https://accounts.spotify.com/authorize/';
-        $scopes = 'user-read-private user-read-email';
-
-        $uri = '?client_id=' . getenv('SPOTIFY_CLIENT_ID') .
-            '&response_type=code' .
-            '&redirect_uri=' . rawurlencode(getenv('BASE_URI') . self::REDIRECT_ACTION) .
-            ($scopes ? '&scope=' . rawurlencode($scopes) : '') .
-            '&state=' . getenv('SPOTIFY_CALLBACK_STATE');
-        header('Location: ' . $baseUri . $uri);
+        $spotifyManager = new SpotifyManager();
+        header('Location: ' . $spotifyManager->getAuthUri());
     }
 
     public function callback($code, $state = null) {
@@ -37,7 +31,7 @@ class SpotifyAuth extends AbstractController
             'form_params' => [
                 'grant_type' => 'authorization_code',
                 'code' => $code,
-                'redirect_uri' => getenv('BASE_URI') . self::REDIRECT_ACTION
+                'redirect_uri' => getenv('BASE_URI') . self::REDIRECT_URI
             ],
             'headers'  => [
                 'Authorization' => 'Basic  ' .
