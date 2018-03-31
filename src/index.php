@@ -5,6 +5,6 @@ use MyWonderland\Service\SongkickManager;
 
 require_once __DIR__ . '/bootstrap.php';
 
-//print "hi there";
+//SongkickManager::hw();
 
-SongkickManager::hw();
+echo $twig->render('index.twig', ['name' => 'Thiago']);
