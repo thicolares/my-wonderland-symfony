@@ -11,15 +11,15 @@ use GuzzleHttp\Client;
 
 class SpotifyAuth extends AbstractController
 {
-    const REDIRECT_URI = 'http://my-wonderland.localhost/callback'; // @todo extract the base
+    const REDIRECT_ACTION = '/callback'; // @todo extract the base
 
     public function auth() {
         $baseUri = 'https://accounts.spotify.com/authorize/';
-        $scopes = 'user-read-private user-read-email user-top-read';
+        $scopes = 'user-read-private user-read-email';
 
         $uri = '?client_id=' . getenv('SPOTIFY_CLIENT_ID') .
             '&response_type=code' .
-            '&redirect_uri=' . rawurlencode(self::REDIRECT_URI) .
+            '&redirect_uri=' . rawurlencode(getenv('BASE_URI') . self::REDIRECT_ACTION) .
             ($scopes ? '&scope=' . rawurlencode($scopes) : '') .
             '&state=' . getenv('SPOTIFY_CALLBACK_STATE');
         header('Location: ' . $baseUri . $uri);
@@ -37,7 +37,7 @@ class SpotifyAuth extends AbstractController
             'form_params' => [
                 'grant_type' => 'authorization_code',
                 'code' => $code,
-                'redirect_uri' => self::REDIRECT_URI
+                'redirect_uri' => getenv('BASE_URI') . self::REDIRECT_ACTION
             ],
             'headers'  => [
                 'Authorization' => 'Basic  ' .
