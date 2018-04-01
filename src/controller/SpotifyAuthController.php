@@ -20,9 +20,9 @@ class SpotifyAuthController extends AbstractController
     /**
      * SpotifyAuth constructor.
      */
-    public function __construct()
+    public function __construct(SpotifyService $spotifyService)
     {
-        $this->spotifyService = SpotifyService::getInstance();
+        $this->spotifyService = $spotifyService;
     }
 
 

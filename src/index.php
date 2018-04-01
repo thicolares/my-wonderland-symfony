@@ -10,7 +10,6 @@ require_once __DIR__ . '/bootstrap.php';
 
 
 $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
-
     $r->addRoute('GET', '/', \MyWonderland\Controller\HomeController::class . ':index');
     $r->addRoute('GET', '/auth', \MyWonderland\Controller\SpotifyAuthController::class . ':auth');
     $r->addRoute('GET', '/callback', \MyWonderland\Controller\SpotifyAuthController::class . ':callback');
@@ -49,6 +48,7 @@ switch ($routeInfo[0]) {
         $handler = $routeInfo[1];
         $vars = $routeInfo[2];
         list($class, $method) = explode(":", $handler, 2);
-        call_user_func_array(array(new $class, $method), $vars + $queryStringVars);
+        $container = new \MyWonderland\Container();
+        call_user_func_array(array($container->build($class), $method), $vars + $queryStringVars);
         break;
 }

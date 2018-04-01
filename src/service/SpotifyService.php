@@ -11,7 +11,7 @@ use GuzzleHttp\Client;
 use MyWonderland\Model\SpotifyMe;
 use MyWonderland\Model\SpotifyToken;
 
-class SpotifyService extends AbstractService
+class SpotifyService
 {
     const REDIRECT_URI = '/callback';
     const BASE_AUTH_URI = 'https://accounts.spotify.com/authorize/';

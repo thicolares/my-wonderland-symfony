@@ -11,6 +11,7 @@ namespace MyWonderland\Controller;
 
 use GuzzleHttp\Client;
 use MyWonderland\Model\SpotifyToken;
+use MyWonderland\Service\RequestService;
 use MyWonderland\Service\SpotifyService;
 
 class HomeController extends AbstractController
@@ -21,12 +22,20 @@ class HomeController extends AbstractController
     protected $spotifyService;
 
     /**
-     * HomeController constructor.
+     * @var RequestService
      */
-    public function __construct()
+    protected $requestService;
+
+    /**
+     * HomeController constructor.
+     * @param SpotifyService $spotifyService
+     * @param RequestService $requestService
+     */
+    public function __construct(SpotifyService $spotifyService, RequestService $requestService)
     {
         parent::__construct();
-        $this->spotifyService = SpotifyService::getInstance();
+        $this->spotifyService = $spotifyService;
+        $this->requestService = $requestService;
     }
 
     public function index()
@@ -34,6 +43,8 @@ class HomeController extends AbstractController
         session_start();
         $logged = isset($_SESSION['token']);
         $me = null;
+
+
         if($logged === true) {
             /**
              * @var SpotifyToken $token
@@ -43,14 +54,14 @@ class HomeController extends AbstractController
 
 
 
-            $client = new Client();
-            $response = $client->request('GET', 'https://api.spotify.com/v1/me/top/artists', [
-                'headers' => [
-                    'Authorization' => 'Bearer ' . $token->getAccessToken()
-                ]
-            ]);
-            $top = \json_decode($response->getBody()->getContents(), true);
-            print_r($top);
+//            $client = new Client();
+//            $response = $client->request('GET', 'https://api.spotify.com/v1/me/top/artists', [
+//                'headers' => [
+//                    'Authorization' => 'Bearer ' . $token->getAccessToken()
+//                ]
+//            ]);
+//            $top = \json_decode($response->getBody()->getContents(), true);
+//            print_r($top);
         }
         print $this->twig->render('index.twig', ['logged' => $logged, 'me' => $me]);
     }

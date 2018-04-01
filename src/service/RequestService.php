@@ -12,7 +12,7 @@ use GuzzleHttp\Client;
 use phpFastCache\Core\Pool\ExtendedCacheItemPoolInterface;
 use Psr\Http\Message\ResponseInterface;
 
-class RequestService extends AbstractService
+class RequestService
 {
     /**
      * @var ExtendedCacheItemPoolInterface
@@ -27,8 +27,10 @@ class RequestService extends AbstractService
         $this->instanceCache = \phpFastCache\CacheManager::getInstance('files');
     }
 
+
     /**
      * @param $method
+     * @param string $baseUri
      * @param string $query
      * @param array $options
      * @return ResponseInterface
