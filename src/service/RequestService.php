@@ -42,13 +42,12 @@ class RequestService
 
         if (is_null($cachedString->get())) {
 
-            // Content ---
-            $client = new Client([
-                // Base URI is used with relative requests
-                'base_uri' => $baseUri,
-                'connect_timeout' => 60 * 3 // seconds
-            ]);
-            $res = $client->request($method, $queryString, $options);
+            print "<br>$baseUri<br>";
+            print "<br>$method<br>";
+            print "<br>$queryString<br>";
+
+            $client = new Client();
+            $res = $client->request($method, $baseUri . $queryString);
             // Não estou cacheando o res porque na deserialização, o
             // [stream:GuzzleHttp\Psr7\Response:private] => GuzzleHttp\Psr7\Stream Object (
             //    [stream:GuzzleHttp\Psr7\Stream:private] => Resource id #79

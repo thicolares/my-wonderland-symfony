@@ -43,14 +43,14 @@ class HomeController extends AbstractController
     {
         $logged = $this->storeManager->has('token');
         $me = null;
-
         if($logged === true) {
             /**
              * @var SpotifyToken $token
              */
             $token = $this->storeManager->get('token');
             $me = $this->spotifyService->requestMe($token);
-
+            $artistId = $this->songkickService->getArtistIdByName('The Beatles');
+            print_r($artistId);
 
 
 //            $client = new Client();
