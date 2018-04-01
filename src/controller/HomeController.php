@@ -52,6 +52,12 @@ class HomeController extends AbstractController
             $token = $this->storeManager->get('token');
             $me = $this->spotifyService->requestMe($token);
             $topArtists = $this->spotifyService->requestTopArtists($token);
+            foreach ($topArtists as $artist) {
+                /**
+                 * @var $artist Artist
+                 */
+                $artist->songkickId = $this->songkickService->getArtistIdByName($artist->name);
+            }
 
 //            $artistId = $this->songkickService->getArtistIdByName('The Beatles');
 //            print_r($artistId);
