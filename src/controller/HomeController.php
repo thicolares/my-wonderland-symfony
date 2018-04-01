@@ -48,19 +48,12 @@ class HomeController extends AbstractController
              * @var SpotifyToken $token
              */
             $token = $this->storeManager->get('token');
-            $me = $this->spotifyService->requestMe($token);
+//            $me = $this->spotifyService->requestMe($token);
+            $this->spotifyService->requestTopArtists($token);
             $artistId = $this->songkickService->getArtistIdByName('The Beatles');
             print_r($artistId);
 
 
-//            $client = new Client();
-//            $response = $client->request('GET', 'https://api.spotify.com/v1/me/top/artists', [
-//                'headers' => [
-//                    'Authorization' => 'Bearer ' . $token->getAccessToken()
-//                ]
-//            ]);
-//            $top = \json_decode($response->getBody()->getContents(), true);
-//            print_r($top);
         }
         print $this->twig->render('index.twig', ['logged' => $logged, 'me' => $me]);
     }

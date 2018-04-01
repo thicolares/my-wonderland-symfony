@@ -37,17 +37,15 @@ class RequestService
      * @return mixed
      */
     public function requestContent($method, $baseUri = '', $queryString = '', array $options = []) {
+        //$this->instanceCache->clear();
         $key = md5($method . $queryString);
+
         $cachedString = $this->instanceCache->getItem($key);
 
         if (is_null($cachedString->get())) {
 
-            print "<br>$baseUri<br>";
-            print "<br>$method<br>";
-            print "<br>$queryString<br>";
-
             $client = new Client();
-            $res = $client->request($method, $baseUri . $queryString);
+            $res = $client->request($method, $baseUri . $queryString, $options);
             // Não estou cacheando o res porque na deserialização, o
             // [stream:GuzzleHttp\Psr7\Response:private] => GuzzleHttp\Psr7\Stream Object (
             //    [stream:GuzzleHttp\Psr7\Stream:private] => Resource id #79

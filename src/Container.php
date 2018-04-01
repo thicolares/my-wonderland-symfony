@@ -21,7 +21,13 @@ use MyWonderland\Service\SpotifyService;
 class Container
 {
     /**
-     * Each time a shared object is called, the object instance created for the first call will be returned
+     * Each time a shared object is called, the object instance created
+     * for the first call will be returned
+     *
+     * Static methods and static variables (aka class methods and class variables)
+     * are a way of putting code and data into a kind of namespace.
+     *
+     * https://stackoverflow.com/questions/11496884/private-static-method-vs-static-method
      */
     static private $shared = [];
 

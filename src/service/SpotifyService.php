@@ -8,6 +8,7 @@
 namespace MyWonderland\Service;
 
 use GuzzleHttp\Client;
+use MyWonderland\Domain\Model\Artist;
 use MyWonderland\Domain\Model\SpotifyMe;
 use MyWonderland\Domain\Model\SpotifyToken;
 
@@ -16,6 +17,7 @@ class SpotifyService
     const REDIRECT_URI = '/callback';
     const BASE_AUTH_URI = 'https://accounts.spotify.com/authorize/';
     const TOKEN_URI = 'https://accounts.spotify.com/api/token';
+    const BASE_API = 'https://api.spotify.com/v1';
 
     /**
      * @var RequestService
@@ -95,5 +97,19 @@ class SpotifyService
             $response['display_name'],
             $response['images'][0]['url']
         );
+    }
+
+    public function requestTopArtists(SpotifyToken $token)
+    {
+        $response = $this->requestService->requestContent('GET', self::BASE_API . '/me/top/artists', '', [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $token->getAccessToken()
+            ]
+        ]);
+        $topArtists = [];
+        foreach($response['items'] as $artist) {
+            $topArtists[] = new Artist($artist['name'], $artist['images'][1]['url']);
+        }
+        return $topArtists;
     }
 }

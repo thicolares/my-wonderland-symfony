@@ -14,22 +14,27 @@ class Artist
     /**
      * @var string
      */
-    public $songkickId;
+    public $name;
 
     /**
      * @var string
      */
-    public $name;
+    public $avatar;
+
+    /**
+     * @var string
+     */
+    public $songkickId;
 
     /**
      * Artist constructor.
-     * @param string $songkickId
-     * @param string $name
+     * @param $name
+     * @param string $avatar
      */
-    public function __construct($songkickId, $name)
+    public function __construct($name, $avatar)
     {
-        $this->songkickId = $songkickId;
         $this->name = $name;
+        $this->avatar = $avatar;
+        $this->songkickId = null;
     }
-
 }
