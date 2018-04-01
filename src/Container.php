@@ -9,6 +9,7 @@ namespace MyWonderland;
 
 use MyWonderland\Controller\HomeController;
 use MyWonderland\Controller\SpotifyAuthController;
+use MyWonderland\Domain\Manager\SessionManager;
 use MyWonderland\Service\RequestService;
 use MyWonderland\Service\SpotifyService;
 
@@ -45,6 +46,7 @@ class Container
 
     public function getHomeController() {
         return new HomeController(
+            new SessionManager(),
             new SpotifyService(),
             new RequestService()
         );
@@ -52,6 +54,7 @@ class Container
 
     public function getSpotifyAuthController() {
         return new SpotifyAuthController(
+            new SessionManager(),
             new SpotifyService()
         );
     }

@@ -9,7 +9,7 @@
 namespace MyWonderland\Controller;
 
 
-use GuzzleHttp\Client;
+use MyWonderland\Domain\Manager\StorageManager;
 use MyWonderland\Domain\Model\SpotifyToken;
 use MyWonderland\Service\RequestService;
 use MyWonderland\Service\SpotifyService;
@@ -28,28 +28,27 @@ class HomeController extends AbstractController
 
     /**
      * HomeController constructor.
+     * @param StorageManager $storageManager
      * @param SpotifyService $spotifyService
      * @param RequestService $requestService
      */
-    public function __construct(SpotifyService $spotifyService, RequestService $requestService)
+    public function __construct(StorageManager $storageManager, SpotifyService $spotifyService, RequestService $requestService)
     {
-        parent::__construct();
+        parent::__construct($storageManager);
         $this->spotifyService = $spotifyService;
         $this->requestService = $requestService;
     }
 
     public function index()
     {
-        session_start();
-        $logged = isset($_SESSION['token']);
+        $logged = $this->storeManager->has('token');
         $me = null;
-
 
         if($logged === true) {
             /**
              * @var SpotifyToken $token
              */
-            $token = $_SESSION['token'];
+            $token = $this->storeManager->get('token');
             $me = $this->spotifyService->requestMe($token);
 
 

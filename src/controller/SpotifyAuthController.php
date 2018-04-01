@@ -1,5 +1,6 @@
 <?php
 namespace MyWonderland\Controller;
+use MyWonderland\Domain\Manager\StorageManager;
 use MyWonderland\Service\SpotifyService;
 
 /**
@@ -16,12 +17,14 @@ class SpotifyAuthController extends AbstractController
      */
     protected $spotifyService;
 
-
     /**
-     * SpotifyAuth constructor.
+     * SpotifyAuthController constructor.
+     * @param StorageManager $storageManager
+     * @param SpotifyService $spotifyService
      */
-    public function __construct(SpotifyService $spotifyService)
+    public function __construct(StorageManager $storageManager, SpotifyService $spotifyService)
     {
+        parent::__construct($storageManager);
         $this->spotifyService = $spotifyService;
     }
 
@@ -36,16 +39,13 @@ class SpotifyAuthController extends AbstractController
     {
         // @todo check state against SPOTIFY_CALLBACK_STATE
 
-        // @todo improve the security
-        session_start();
-        $_SESSION['token'] = $this->spotifyService->requestToken($code);
+        $this->storeManager->set('token', $this->spotifyService->requestToken($code));
         header('Location: ' . getenv('BASE_URI'));
     }
 
 
     public function logout() {
-        session_start();
-        unset($_SESSION['token']);
+        $this->storeManager->unset('token');
         header('Location: /');
     }
 }
