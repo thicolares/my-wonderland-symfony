@@ -11,6 +11,7 @@ namespace MyWonderland\Controller;
 
 use MyWonderland\Domain\Manager\StorageManager;
 use MyWonderland\Domain\Model\Artist;
+use MyWonderland\Domain\Model\Ranking;
 use MyWonderland\Domain\Model\SpotifyToken;
 use MyWonderland\Service\SongkickService;
 use MyWonderland\Service\SpotifyService;
@@ -52,22 +53,28 @@ class HomeController extends AbstractController
             $token = $this->storeManager->get('token');
             $me = $this->spotifyService->requestMe($token);
             $topArtists = $this->spotifyService->requestTopArtists($token);
+            $events = [];
+            $count = 0;
             foreach ($topArtists as $artist) {
                 /**
                  * @var $artist Artist
                  */
                 $artist->songkickId = $this->songkickService->getArtistIdByName($artist->name);
+                $artistEvents = $this->songkickService->getArtistUpcomingEvents($artist->songkickId);
+                if($artistEvents) {
+                    $count += count($artistEvents);
+                        $events = array_merge($events, $artistEvents);
+                }
             }
-
-//            $artistId = $this->songkickService->getArtistIdByName('The Beatles');
-//            print_r($artistId);
-
+            $ranking = new Ranking($events);
+            $report = $ranking->report();
 
         }
         print $this->twig->render('index.twig', [
             'logged' => $logged,
             'me' => $me,
             'topArtists' => $topArtists,
+            'report' => $report
         ]);
     }
 }

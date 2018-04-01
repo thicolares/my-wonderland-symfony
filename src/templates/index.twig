@@ -118,6 +118,14 @@
                     {% endfor %}
 
                 </div>
+                <div class="row">
+                    <ol>
+                    {% for land in report %}
+                        <li>{{ land.city }}, {{ land.country }}</li>
+                    {% endfor %}
+                    </ol>
+
+                </div>
             </div>
         </div>
     {% endif %}
