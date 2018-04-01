@@ -93,16 +93,17 @@
 </header>
 
 <main role="main">
-
-    <section class="jumbotron text-center">
-        <div class="container">
-            <h1 class="jumbotron-heading">Call to action</h1>
-            <p class="lead text-muted">This is... .. call to action</p>
-            <p>
-                <a href="/auth" class="btn btn-primary my-2">Main call to action</a>
-            </p>
-        </div>
-    </section>
+    {% if logged == false %}
+        <section class="jumbotron text-center">
+            <div class="container">
+                <h1 class="jumbotron-heading">Call to action</h1>
+                <p class="lead text-muted">This is... .. call to action</p>
+                <p>
+                    <a href="/auth" class="btn btn-primary my-2">Main call to action</a>
+                </p>
+            </div>
+        </section>
+    {% endif %}
 
     <div class="album py-5 bg-light">
         <div class="container">

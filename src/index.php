@@ -12,9 +12,9 @@ require_once __DIR__ . '/bootstrap.php';
 $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
 
     $r->addRoute('GET', '/', \MyWonderland\Controller\HomeController::class . ':index');
-    $r->addRoute('GET', '/auth', \MyWonderland\Controller\SpotifyAuth::class . ':auth');
-    $r->addRoute('GET', '/callback', \MyWonderland\Controller\SpotifyAuth::class . ':callback');
-    $r->addRoute('GET', '/logout', \MyWonderland\Controller\SpotifyAuth::class . ':logout');
+    $r->addRoute('GET', '/auth', \MyWonderland\Controller\SpotifyAuthController::class . ':auth');
+    $r->addRoute('GET', '/callback', \MyWonderland\Controller\SpotifyAuthController::class . ':callback');
+    $r->addRoute('GET', '/logout', \MyWonderland\Controller\SpotifyAuthController::class . ':logout');
 //    // {id} must be a number (\d+)
 //    $r->addRoute('GET', '/user/{id:\d+}', 'get_user_handler');
 //    // The /{title} suffix is optional
