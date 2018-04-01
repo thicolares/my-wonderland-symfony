@@ -9,7 +9,6 @@ use MyWonderland\Service\SpotifyService;
  * Date: 31/03/18
  * Time: 12:00
  */
-
 class SpotifyAuthController extends AbstractController
 {
     /**
