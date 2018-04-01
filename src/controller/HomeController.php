@@ -11,7 +11,7 @@ namespace MyWonderland\Controller;
 
 use MyWonderland\Domain\Manager\StorageManager;
 use MyWonderland\Domain\Model\SpotifyToken;
-use MyWonderland\Service\RequestService;
+use MyWonderland\Service\SongkickService;
 use MyWonderland\Service\SpotifyService;
 
 class HomeController extends AbstractController
@@ -22,21 +22,21 @@ class HomeController extends AbstractController
     protected $spotifyService;
 
     /**
-     * @var RequestService
+     * @var SongkickService
      */
-    protected $requestService;
+    protected $songkickService;
 
     /**
      * HomeController constructor.
      * @param StorageManager $storageManager
      * @param SpotifyService $spotifyService
-     * @param RequestService $requestService
+     * @param SongkickService $songkickService
      */
-    public function __construct(StorageManager $storageManager, SpotifyService $spotifyService, RequestService $requestService)
+    public function __construct(StorageManager $storageManager, SpotifyService $spotifyService, SongkickService $songkickService)
     {
         parent::__construct($storageManager);
         $this->spotifyService = $spotifyService;
-        $this->requestService = $requestService;
+        $this->songkickService = $songkickService;
     }
 
     public function index()

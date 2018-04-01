@@ -11,6 +11,7 @@ use MyWonderland\Controller\HomeController;
 use MyWonderland\Controller\SpotifyAuthController;
 use MyWonderland\Domain\Manager\SessionManager;
 use MyWonderland\Service\RequestService;
+use MyWonderland\Service\SongkickService;
 use MyWonderland\Service\SpotifyService;
 
 /**
@@ -48,7 +49,7 @@ class Container
         return new HomeController(
             new SessionManager(),
             new SpotifyService(new RequestService()),
-            new RequestService()
+            new SongkickService(new RequestService())
         );
     }
 

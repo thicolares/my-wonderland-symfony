@@ -39,7 +39,7 @@ class SpotifyAuthController extends AbstractController
         // @todo check state against SPOTIFY_CALLBACK_STATE
 
         $this->storeManager->set('token', $this->spotifyService->requestToken($code));
-        header('Location: ' . getenv('BASE_URI'));
+        header('Location: /');
     }
 
 
