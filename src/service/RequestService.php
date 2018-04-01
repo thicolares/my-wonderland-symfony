@@ -37,7 +37,7 @@ class RequestService
      * @return mixed
      */
     public function requestContent($method, $baseUri = '', $queryString = '', array $options = []) {
-        //$this->instanceCache->clear();
+        $this->instanceCache->clear();
         $key = md5($method . $queryString);
 
         $cachedString = $this->instanceCache->getItem($key);

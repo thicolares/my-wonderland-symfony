@@ -113,15 +113,9 @@
                 {{ me.country }}: {{ me.displayName }}
 
                 <div class="row">
-                    <div class="col-md-4">
-                        asdasdasd
-                    </div>
-                    <div class="col-md-4">
-                        asdasd
-                    </div>
-                    <div class="col-md-4">
-                        asdasdasd
-                    </div>
+                    {% for artist in topArtists %}
+                        <li>{{ artist.name }} <img src="{{ artist.avatar }}" alt="" style="width: 100px; height: 100px"></li>
+                    {% endfor %}
 
                 </div>
             </div>

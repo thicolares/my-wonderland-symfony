@@ -10,6 +10,7 @@ namespace MyWonderland\Controller;
 
 
 use MyWonderland\Domain\Manager\StorageManager;
+use MyWonderland\Domain\Model\Artist;
 use MyWonderland\Domain\Model\SpotifyToken;
 use MyWonderland\Service\SongkickService;
 use MyWonderland\Service\SpotifyService;
@@ -43,18 +44,24 @@ class HomeController extends AbstractController
     {
         $logged = $this->storeManager->has('token');
         $me = null;
+        $topArtists = [];
         if($logged === true) {
             /**
              * @var SpotifyToken $token
              */
             $token = $this->storeManager->get('token');
-//            $me = $this->spotifyService->requestMe($token);
-            $this->spotifyService->requestTopArtists($token);
-            $artistId = $this->songkickService->getArtistIdByName('The Beatles');
-            print_r($artistId);
+            $me = $this->spotifyService->requestMe($token);
+            $topArtists = $this->spotifyService->requestTopArtists($token);
+
+//            $artistId = $this->songkickService->getArtistIdByName('The Beatles');
+//            print_r($artistId);
 
 
         }
-        print $this->twig->render('index.twig', ['logged' => $logged, 'me' => $me]);
+        print $this->twig->render('index.twig', [
+            'logged' => $logged,
+            'me' => $me,
+            'topArtists' => $topArtists,
+        ]);
     }
 }
