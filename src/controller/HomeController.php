@@ -14,7 +14,6 @@ class HomeController extends AbstractController
     public function index()
     {
         session_start();
-        print_r($_SESSION['token']);
         $logged = isset($_SESSION['token']);
         print $this->twig->render('index.twig', ['logged' => $logged]);
     }

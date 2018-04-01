@@ -39,8 +39,7 @@ class SpotifyAuth extends AbstractController
         // @todo improve the security
         session_start();
         $_SESSION['token'] = $this->spotifyService->requestToken($code);
-        print_r($_SESSION['token']);
-        //header('Location: ' . getenv('BASE_URI'));
+        header('Location: ' . getenv('BASE_URI'));
 
 //        $client = new Client();
 //        $response = $client->get('https://api.spotify.com/v1/me', [
@@ -60,7 +59,11 @@ class SpotifyAuth extends AbstractController
 //        $top = \json_decode($response->getBody()->getContents(), true);
 //        print_r($top);
 
+    }
 
-
+    public function logout() {
+        session_start();
+        unset($_SESSION['token']);
+        header('Location: /');
     }
 }
