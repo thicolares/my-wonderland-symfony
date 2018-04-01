@@ -10,7 +10,7 @@ namespace MyWonderland\Controller;
 
 
 use GuzzleHttp\Client;
-use MyWonderland\Model\SpotifyToken;
+use MyWonderland\Domain\Model\SpotifyToken;
 use MyWonderland\Service\RequestService;
 use MyWonderland\Service\SpotifyService;
 

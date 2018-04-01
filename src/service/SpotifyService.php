@@ -8,8 +8,8 @@
 namespace MyWonderland\Service;
 
 use GuzzleHttp\Client;
-use MyWonderland\Model\SpotifyMe;
-use MyWonderland\Model\SpotifyToken;
+use MyWonderland\Domain\Model\SpotifyMe;
+use MyWonderland\Domain\Model\SpotifyToken;
 
 class SpotifyService
 {

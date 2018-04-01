@@ -6,7 +6,7 @@
  * Time: 21:56
  */
 
-namespace MyWonderland\Model;
+namespace MyWonderland\Domain\Model;
 
 
 class SpotifyMe

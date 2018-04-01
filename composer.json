@@ -20,7 +20,8 @@
     "autoload": {
         "psr-4": {
             "MyWonderland\\": "src/",
-            "MyWonderland\\Model\\": "src/model",
+            "MyWonderland\\Domain\\Model\\": "src/domain/model",
+            "MyWonderland\\Domain\\Manager\\": "src/domain/manager",
             "MyWonderland\\Service\\": "src/service",
             "MyWonderland\\Controller\\": "src/controller"
         }
