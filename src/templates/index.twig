@@ -107,27 +107,27 @@
 
 
     {% if logged == true %}
-        <div class="album py-5 bg-light">
-            <div class="container">
+        <div class="container">
+            <figure class="profile-avatar">
+                <img src="assets/images/avatar-thiago-colares.JPG" alt="">
+            </figure>
+            <img src="{{ me.spotify }}" alt="Avatar">
+            {{ me.country }}: {{ me.displayName }}
 
-                <img src="{{ me.spotify }}" alt="Avatar">
-                {{ me.country }}: {{ me.displayName }}
+            <div class="row" style="height: 480px; width: 600px">
+                {% for artist in topArtists %}
+                    {#<li>[{{ artist.songkickId }}] {{ artist.name }} <img src="{{ artist.avatar }}" alt="" style="width: 100px; height: 100px"></li>#}
+                    <img src="{{ artist.avatar }}" alt="" class="img-fluid" style="width: 120px; height: 120px">
+                {% endfor %}
 
-                <div class="row" style="height: 768px; width: 960px">
-                    {% for artist in topArtists %}
-                        {#<li>[{{ artist.songkickId }}] {{ artist.name }} <img src="{{ artist.avatar }}" alt="" style="width: 100px; height: 100px"></li>#}
-                        <img src="{{ artist.avatar }}" alt="" class="img-fluid" style="width: 192px; height: 192px">
-                    {% endfor %}
+            </div>
+            <div class="row">
+                <ol>
+                {% for land in report %}
+                    <li>{{ land.city }}, {{ land.country }}</li>
+                {% endfor %}
+                </ol>
 
-                </div>
-                <div class="row">
-                    <ol>
-                    {% for land in report %}
-                        <li>{{ land.city }}, {{ land.country }}</li>
-                    {% endfor %}
-                    </ol>
-
-                </div>
             </div>
         </div>
     {% endif %}

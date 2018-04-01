@@ -46,6 +46,7 @@ class HomeController extends AbstractController
         $logged = $this->storeManager->has('token');
         $me = null;
         $topArtists = [];
+        $report = [];
         if($logged === true) {
             /**
              * @var SpotifyToken $token
