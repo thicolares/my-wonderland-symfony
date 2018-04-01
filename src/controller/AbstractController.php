@@ -9,5 +9,16 @@ namespace MyWonderland\Controller;
 
 abstract class AbstractController
 {
-
+    /**
+     * @var \Twig_Environment
+     */
+    protected $twig;
+    /**
+     * AbstractController constructor.
+     */
+    public function __construct()
+    {
+        global $twig;
+        $this->twig = $twig;
+    }
 }

@@ -10,6 +10,8 @@ require_once __DIR__ . '/bootstrap.php';
 
 
 $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
+
+    $r->addRoute('GET', '/', \MyWonderland\Controller\HomeController::class . ':index');
     $r->addRoute('GET', '/auth', \MyWonderland\Controller\SpotifyAuth::class . ':auth');
     $r->addRoute('GET', '/callback', \MyWonderland\Controller\SpotifyAuth::class . ':callback');
 //    // {id} must be a number (\d+)

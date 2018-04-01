@@ -1,6 +1,5 @@
 <?php
 namespace MyWonderland\Controller;
-use GuzzleHttp\Client;
 use MyWonderland\Service\SpotifyService;
 
 /**
@@ -37,25 +36,29 @@ class SpotifyAuth extends AbstractController
     {
         // @todo check state against SPOTIFY_CALLBACK_STATE
 
-        $token = $this->spotifyService->requestToken($code);
+        // @todo improve the security
+        session_start();
+        $_SESSION['token'] = $this->spotifyService->requestToken($code);
+        print_r($_SESSION['token']);
+        //header('Location: ' . getenv('BASE_URI'));
 
-        $client = new Client();
-        $response = $client->get('https://api.spotify.com/v1/me', [
-            'headers' => [
-                'Authorization' => 'Bearer ' . $token->getAccessToken()
-            ]
-        ]);
-        $finalContents = \json_decode($response->getBody()->getContents(), true);
-        print "<img src='{$finalContents['images'][0]['url']}' />";
-
-        $client = new Client();
-        $response = $client->request('GET', 'https://api.spotify.com/v1/me/top/artists', [
-            'headers' => [
-                'Authorization' => 'Bearer ' . $token->getAccessToken()
-            ]
-        ]);
-        $top = \json_decode($response->getBody()->getContents(), true);
-        print_r($top);
+//        $client = new Client();
+//        $response = $client->get('https://api.spotify.com/v1/me', [
+//            'headers' => [
+//                'Authorization' => 'Bearer ' . $token->getAccessToken()
+//            ]
+//        ]);
+//        $finalContents = \json_decode($response->getBody()->getContents(), true);
+//        print "<img src='{$finalContents['images'][0]['url']}' />";
+//
+//        $client = new Client();
+//        $response = $client->request('GET', 'https://api.spotify.com/v1/me/top/artists', [
+//            'headers' => [
+//                'Authorization' => 'Bearer ' . $token->getAccessToken()
+//            ]
+//        ]);
+//        $top = \json_decode($response->getBody()->getContents(), true);
+//        print_r($top);
 
 
 

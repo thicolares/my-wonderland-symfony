@@ -13,4 +13,4 @@ $dotenv->load();
  * TWIG
  */
 $loader = new \Twig_Loader_Filesystem(__DIR__ . '/templates');
-$twig = new \Twig_Environment($loader);
+$twig = new \Twig_Environment($loader); // @todo must be a singleton

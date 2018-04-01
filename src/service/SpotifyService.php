@@ -5,11 +5,10 @@
  * Date: 31/03/18
  * Time: 18:47
  */
-
 namespace MyWonderland\Service;
 
-
 use GuzzleHttp\Client;
+use MyWonderland\Model\SpotifyToken;
 
 class SpotifyService extends AbstractService
 {
@@ -34,7 +33,7 @@ class SpotifyService extends AbstractService
 
     /**
      * @param $code
-     * @return \SpotifyToken
+     * @return SpotifyToken
      */
     public function requestToken($code) {
         $client = new Client();
@@ -52,7 +51,7 @@ class SpotifyService extends AbstractService
 
         // @todo use guzzle options
         $responseBody = \json_decode($response->getBody()->getContents(), true);
-        return new \SpotifyToken(
+        return new SpotifyToken(
             $responseBody['access_token'],
             $responseBody['token_type'],
             $responseBody['expires_in'],

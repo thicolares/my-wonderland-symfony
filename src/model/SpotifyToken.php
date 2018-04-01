@@ -5,6 +5,7 @@
  * Date: 31/03/18
  * Time: 19:59
  */
+namespace MyWonderland\Model;
 
 class SpotifyToken
 {

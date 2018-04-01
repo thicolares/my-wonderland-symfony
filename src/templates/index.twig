@@ -82,9 +82,12 @@
             <a href="#" class="navbar-brand d-flex align-items-center">
                 <strong><span style="font-size:1.3em">&#9786;</span> My Wonderland</strong>
             </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+            {#<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">#}
+                {#<span class="navbar-toggler-icon"></span>#}
+            {#</button>#}
+            {% if logged == true %}
+                <a class="btn btn-outline-light" href="#">End session</a>
+            {% endif %}
         </div>
     </div>
 </header>
@@ -96,7 +99,7 @@
             <h1 class="jumbotron-heading">Call to action</h1>
             <p class="lead text-muted">This is... .. call to action</p>
             <p>
-                <a href="#" class="btn btn-primary my-2">Main call to action</a>
+                <a href="/auth" class="btn btn-primary my-2">Main call to action</a>
             </p>
         </div>
     </section>
