@@ -17,6 +17,21 @@ class SpotifyService
     const BASE_AUTH_URI = 'https://accounts.spotify.com/authorize/';
     const TOKEN_URI = 'https://accounts.spotify.com/api/token';
 
+    /**
+     * @var RequestService
+     */
+    protected $requestService;
+
+
+    /**
+     * SpotifyService constructor.
+     * @param RequestService $requestService
+     */
+    public function __construct(RequestService $requestService)
+    {
+        $this->requestService = $requestService;
+    }
+
 
     /**
      * @return string
@@ -70,17 +85,15 @@ class SpotifyService
      */
     public function requestMe(SpotifyToken $token)
     {
-        $client = new Client();
-        $response = $client->get('https://api.spotify.com/v1/me', [
+        $response = $this->requestService->requestContent('GET', 'https://api.spotify.com/v1/me', '', [
             'headers' => [
                 'Authorization' => 'Bearer ' . $token->getAccessToken()
             ]
         ]);
-        $responseBody = \json_decode($response->getBody()->getContents(), true);
         return new SpotifyMe(
-            $responseBody['country'],
-            $responseBody['display_name'],
-            $responseBody['images'][0]['url']
+            $response['country'],
+            $response['display_name'],
+            $response['images'][0]['url']
         );
     }
 }

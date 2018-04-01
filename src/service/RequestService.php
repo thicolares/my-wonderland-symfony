@@ -28,15 +28,16 @@ class RequestService
     }
 
 
+
     /**
-     * @param $method
+     * @param string $method GET/POST/PATCH...
      * @param string $baseUri
-     * @param string $query
+     * @param string $queryString
      * @param array $options
-     * @return ResponseInterface
+     * @return mixed
      */
-    public function requestContent($method, $baseUri = '', $query = '', array $options = []) {
-        $key = md5($method.$query);
+    public function requestContent($method, $baseUri = '', $queryString = '', array $options = []) {
+        $key = md5($method . $queryString);
         $cachedString = $this->instanceCache->getItem($key);
 
         if (is_null($cachedString->get())) {
@@ -47,7 +48,7 @@ class RequestService
                 'base_uri' => $baseUri,
                 'connect_timeout' => 60 * 3 // seconds
             ]);
-            $res = $client->request($method, $query, $options);
+            $res = $client->request($method, $queryString, $options);
             // Não estou cacheando o res porque na deserialização, o
             // [stream:GuzzleHttp\Psr7\Response:private] => GuzzleHttp\Psr7\Stream Object (
             //    [stream:GuzzleHttp\Psr7\Stream:private] => Resource id #79
