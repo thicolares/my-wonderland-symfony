@@ -8,6 +8,7 @@
 namespace MyWonderland\Service;
 
 use GuzzleHttp\Client;
+use MyWonderland\Model\SpotifyMe;
 use MyWonderland\Model\SpotifyToken;
 
 class SpotifyService extends AbstractService
@@ -20,7 +21,8 @@ class SpotifyService extends AbstractService
     /**
      * @return string
      */
-    public function getAuthUri() {
+    public function getAuthUri()
+    {
         $scopes = 'user-read-private user-read-email user-top-read';
         $queryString = '?client_id=' . getenv('SPOTIFY_CLIENT_ID') .
             '&response_type=code' .
@@ -35,7 +37,8 @@ class SpotifyService extends AbstractService
      * @param $code
      * @return SpotifyToken
      */
-    public function requestToken($code) {
+    public function requestToken($code)
+    {
         $client = new Client();
         $response = $client->request('POST', self::TOKEN_URI, [
             'form_params' => [
@@ -43,7 +46,7 @@ class SpotifyService extends AbstractService
                 'code' => $code,
                 'redirect_uri' => getenv('BASE_URI') . self::REDIRECT_URI
             ],
-            'headers'  => [
+            'headers' => [
                 'Authorization' => 'Basic  ' .
                     base64_encode(getenv('SPOTIFY_CLIENT_ID') . ':' . getenv('SPOTIFY_CLIENT_SECRET'))
             ]
@@ -57,6 +60,27 @@ class SpotifyService extends AbstractService
             $responseBody['expires_in'],
             $responseBody['refresh_token'],
             $responseBody['scope']
+        );
+    }
+
+
+    /**
+     * @param SpotifyToken $token
+     * @return SpotifyMe
+     */
+    public function requestMe(SpotifyToken $token)
+    {
+        $client = new Client();
+        $response = $client->get('https://api.spotify.com/v1/me', [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $token->getAccessToken()
+            ]
+        ]);
+        $responseBody = \json_decode($response->getBody()->getContents(), true);
+        return new SpotifyMe(
+            $responseBody['country'],
+            $responseBody['display_name'],
+            $responseBody['images'][0]['url']
         );
     }
 }

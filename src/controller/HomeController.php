@@ -9,12 +9,49 @@
 namespace MyWonderland\Controller;
 
 
+use GuzzleHttp\Client;
+use MyWonderland\Model\SpotifyToken;
+use MyWonderland\Service\SpotifyService;
+
 class HomeController extends AbstractController
 {
+    /**
+     * @var SpotifyService
+     */
+    protected $spotifyService;
+
+    /**
+     * HomeController constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->spotifyService = SpotifyService::getInstance();
+    }
+
     public function index()
     {
         session_start();
         $logged = isset($_SESSION['token']);
-        print $this->twig->render('index.twig', ['logged' => $logged]);
+        $me = null;
+        if($logged === true) {
+            /**
+             * @var SpotifyToken $token
+             */
+            $token = $_SESSION['token'];
+            $me = $this->spotifyService->requestMe($token);
+
+
+
+            $client = new Client();
+            $response = $client->request('GET', 'https://api.spotify.com/v1/me/top/artists', [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $token->getAccessToken()
+                ]
+            ]);
+            $top = \json_decode($response->getBody()->getContents(), true);
+            print_r($top);
+        }
+        print $this->twig->render('index.twig', ['logged' => $logged, 'me' => $me]);
     }
 }
