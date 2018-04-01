@@ -24,12 +24,11 @@ abstract class AbstractController
     /**
      * AbstractController constructor.
      * @param StorageManager $storageManager
+     * @param \Twig_Environment $twig
      */
-    public function __construct(StorageManager $storageManager)
+    public function __construct(StorageManager $storageManager, \Twig_Environment $twig)
     {
         $this->storeManager = $storageManager;
-
-        global $twig;
         $this->twig = $twig;
     }
 }

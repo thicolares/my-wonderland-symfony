@@ -32,9 +32,9 @@ class HomeController extends AbstractController
      * @param SpotifyService $spotifyService
      * @param SongkickService $songkickService
      */
-    public function __construct(StorageManager $storageManager, SpotifyService $spotifyService, SongkickService $songkickService)
+    public function __construct(StorageManager $storageManager, \Twig_Environment $twig, SpotifyService $spotifyService, SongkickService $songkickService)
     {
-        parent::__construct($storageManager);
+        parent::__construct($storageManager, $twig);
         $this->spotifyService = $spotifyService;
         $this->songkickService = $songkickService;
     }

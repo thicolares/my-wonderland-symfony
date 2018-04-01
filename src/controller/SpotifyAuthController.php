@@ -19,11 +19,12 @@ class SpotifyAuthController extends AbstractController
     /**
      * SpotifyAuthController constructor.
      * @param StorageManager $storageManager
+     * @param \Twig_Environment $twig
      * @param SpotifyService $spotifyService
      */
-    public function __construct(StorageManager $storageManager, SpotifyService $spotifyService)
+    public function __construct(StorageManager $storageManager, \Twig_Environment $twig, SpotifyService $spotifyService)
     {
-        parent::__construct($storageManager);
+        parent::__construct($storageManager, $twig);
         $this->spotifyService = $spotifyService;
     }
 

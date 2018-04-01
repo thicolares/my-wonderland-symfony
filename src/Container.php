@@ -20,7 +20,12 @@ use MyWonderland\Service\SpotifyService;
  */
 class Container
 {
-    protected $parameters = [];
+    /**
+     * Each time a shared object is called, the object instance created for the first call will be returned
+     */
+    static private $shared = [];
+
+    private $parameters = [];
 
     /**
      * Containerontainer constructor.
@@ -30,6 +35,18 @@ class Container
     {
         $this->parameters = $parameters;
     }
+
+
+    public function getTwig() {
+        if (isset(self::$shared['twig'])) {
+            return self::$shared['twig'];
+        }
+
+        $loader = new \Twig_Loader_Filesystem(__DIR__ . '/templates');
+        self::$shared['twig'] = new \Twig_Environment($loader);
+        return self::$shared['twig'];
+    }
+
 
     public function build($class) {
         switch ($class) {
@@ -48,6 +65,7 @@ class Container
     public function getHomeController() {
         return new HomeController(
             new SessionManager(),
+            $this->getTwig(),
             new SpotifyService(new RequestService()),
             new SongkickService(new RequestService())
         );
@@ -56,6 +74,7 @@ class Container
     public function getSpotifyAuthController() {
         return new SpotifyAuthController(
             new SessionManager(),
+            $this->getTwig(),
             new SpotifyService(new RequestService())
         );
     }
