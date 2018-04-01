@@ -87,11 +87,11 @@ class SpotifyService
      */
     public function requestMe(SpotifyToken $token)
     {
-        $response = $this->requestService->requestContent('GET', 'https://api.spotify.com/v1/me', '', [
+        $response = $this->requestService->requestContent('GET', 'https://api.spotify.com/v1/me', [
             'headers' => [
                 'Authorization' => 'Bearer ' . $token->getAccessToken()
             ]
-        ]);
+        ], md5($token->getAccessToken()) );
         return new SpotifyMe(
             $response['country'],
             $response['display_name'],
@@ -101,11 +101,11 @@ class SpotifyService
 
     public function requestTopArtists(SpotifyToken $token)
     {
-        $response = $this->requestService->requestContent('GET', self::BASE_API . '/me/top/artists', '', [
+        $response = $this->requestService->requestContent('GET', self::BASE_API . '/me/top/artists', [
             'headers' => [
                 'Authorization' => 'Bearer ' . $token->getAccessToken()
             ]
-        ]);
+        ], md5($token->getAccessToken()) );
         $topArtists = [];
         foreach($response['items'] as $artist) {
             $topArtists[] = new Artist($artist['name'], $artist['images'][1]['url']);

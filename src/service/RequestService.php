@@ -10,7 +10,6 @@ namespace MyWonderland\Service;
 
 use GuzzleHttp\Client;
 use phpFastCache\Core\Pool\ExtendedCacheItemPoolInterface;
-use Psr\Http\Message\ResponseInterface;
 
 class RequestService
 {
@@ -30,22 +29,21 @@ class RequestService
 
 
     /**
-     * @param string $method GET/POST/PATCH...
-     * @param string $baseUri
-     * @param string $queryString
+     * @param $method
+     * @param string $uri
      * @param array $options
+     * @param string $salt a random data that is used as an additional input to a one-way function that "hashes" data
      * @return mixed
      */
-    public function requestContent($method, $baseUri = '', $queryString = '', array $options = []) {
-        $this->instanceCache->clear();
-        $key = md5($method . $queryString);
+    public function requestContent($method, $uri = '', array $options = [], $salt = '') {
+        $cacheKey = md5($method.$uri.$salt);
 
-        $cachedString = $this->instanceCache->getItem($key);
+        $cachedString = $this->instanceCache->getItem($cacheKey);
 
         if (is_null($cachedString->get())) {
 
             $client = new Client();
-            $res = $client->request($method, $baseUri . $queryString, $options);
+            $res = $client->request($method, $uri , $options);
             // Não estou cacheando o res porque na deserialização, o
             // [stream:GuzzleHttp\Psr7\Response:private] => GuzzleHttp\Psr7\Stream Object (
             //    [stream:GuzzleHttp\Psr7\Stream:private] => Resource id #79
