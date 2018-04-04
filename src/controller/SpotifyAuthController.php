@@ -35,9 +35,13 @@ class SpotifyAuthController extends AbstractController
     }
 
 
-    public function callback($code, $state = null)
+    public function callback($state, $code = null, $error = null)
     {
         // @todo check state against SPOTIFY_CALLBACK_STATE
+
+        if($error !== null) {
+            header('Location: /');
+        }
 
         $this->storeManager->set('token', $this->spotifyService->requestToken($code));
         header('Location: /');

@@ -22,6 +22,7 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
 $httpMethod = $_SERVER['REQUEST_METHOD'];
 $uri = $_SERVER['REQUEST_URI'];
 $queryStringVars = [];
+$queryString = '';
 
 // Strip query string (?foo=bar) and decode URI
 if (false !== $pos = strpos($uri, '?')) {
@@ -31,6 +32,32 @@ if (false !== $pos = strpos($uri, '?')) {
 }
 $uri = rawurldecode($uri);
 $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
+
+/**
+ * @param $class
+ * @param $method
+ * @param $allVars
+ * @return array
+ * @throws Exception
+ */
+function sortParams($class, $method, $allVars)
+{
+    $params = (new ReflectionMethod($class, $method))->getParameters();
+    $sortedVars = [];
+    foreach ($params as $param) {
+        //$param is an instance of ReflectionParameter
+        if (isset($allVars[$param->getName()])) {
+            $sortedVars[$param->getName()] = $allVars[$param->getName()];
+            continue;
+        }
+        if ($param->isOptional()) {
+            $sortedVars[$param->getName()] = $param->getDefaultValue();
+            continue;
+        }
+        throw new \Exception("Missed {$param->getName()} param.", 1522882396);
+    }
+    return $sortedVars;
+}
 
 switch ($routeInfo[0]) {
     case FastRoute\Dispatcher::NOT_FOUND:
@@ -45,6 +72,12 @@ switch ($routeInfo[0]) {
         $vars = $routeInfo[2];
         list($class, $method) = explode(":", $handler, 2);
         $container = new \MyWonderland\Container();
-        call_user_func_array(array($container->build($class), $method), $vars + $queryStringVars);
+
+        parse_str($queryString, $queryString);
+
+        $allVars = $vars + $queryStringVars;
+        $sortedVars = sortParams($class, $method, $allVars);
+
+        call_user_func_array(array($container->build($class), $method), $sortedVars);
         break;
 }

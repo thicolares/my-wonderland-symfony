@@ -43,6 +43,7 @@ class SpotifyService
         $scopes = 'user-read-private user-read-email user-top-read';
         $queryString = '?client_id=' . getenv('SPOTIFY_CLIENT_ID') .
             '&response_type=code' .
+            '&show_dialog=true' .
             '&redirect_uri=' . rawurlencode(getenv('BASE_URI') . self::REDIRECT_URI) .
             ($scopes ? '&scope=' . rawurlencode($scopes) : '') .
             '&state=' . getenv('SPOTIFY_CALLBACK_STATE');
