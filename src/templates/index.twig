@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <link href="https://fonts.googleapis.com/css?family=Chicle" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1" crossorigin="anonymous">
 
     <!-- Custom styles for this template -->
     <style>
@@ -26,6 +26,9 @@
         a {
             color: #66fcf1;
             text-decoration: underline;
+        }
+        a.btn {
+            text-decoration: none;
         }
 
         h1, .h1 {
@@ -109,6 +112,11 @@
             font-size: 2em;
         }
 
+        footer {
+            color: #2c5d57;
+            text-align: center;
+        }
+
         .box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
     </style>
 </head>
@@ -119,7 +127,8 @@
     <div class="navbar navbar-dark">
         <div class="container d-flex justify-content-between">
             <a href="#" class="navbar-brand d-flex align-items-center">
-                <strong><span style="font-size:1.3em">&#9786;</span> My Wonderland</strong>
+                <strong>
+                    <i class="fas fa-heart"></i>  My Wonderland</strong>
             </a>
             {#<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">#}
                 {#<span class="navbar-toggler-icon"></span>#}
@@ -133,13 +142,21 @@
 
 <main role="main">
     {% if logged == false %}
-        <section class="jumbotron text-center">
+        <section class=" text-center">
             <div class="container">
-                <h1 class="jumbotron-heading">Call to action</h1>
-                <p class="lead text-muted">This is... .. call to action</p>
-                <p>
-                    <a href="/auth" class="btn btn-primary my-2">Main call to action</a>
-                </p>
+                <div class="row">
+                    <div class="col">
+                        <h1>
+                            <i class="fas fa-headphones"></i> + <i class="far fa-compass"></i> = <i class="fas fa-heart"></i>
+                        </h1>
+                        <h2 class="jumbotron-heading">Find a place to live</h2>
+                        <h3>where there're more concerts performed by the artists you love.</h3>
+                        <br>
+                        <p>
+                            <a href="/auth" class="btn btn-success btn-lg"><i class="fab fa-spotify"></i> Log in with Spotify</a>
+                        </p>
+                    </div>
+                </div>
             </div>
         </section>
     {% endif %}
@@ -192,13 +209,14 @@
 
 </main>
 
-<footer class="text-muted">
+<footer >
     <div class="container">
         {#<p class="float-right">#}
             {#<a href="#">Back to top</a>#}
         {#</p>#}
         <p>My Wonderland finds the place where there're more concerts performed by the artists you love.</p>
-        <p>Made with ♫ by <a href="http://colar.es">Thiago Colares</a></p>
+        <p>P.s.: hold your horses! This is still a naive math based on your Spotify top favorites and Songkick calendar. </p>
+        <p>Made with <span style="color: Tomato"><i class="fas fa-headphones"></i> + <i class="fas fa-heart"></i></span> by <a href="http://colar.es">Thiago Colares</a></p>
     </div>
 </footer>
 
