@@ -75,7 +75,7 @@ class HomeController extends AbstractController
             'logged' => $logged,
             'me' => $me,
             'topArtists' => $topArtists,
-            'report' => $report
+            'report' => array_slice($report, 0, 10)
         ]);
     }
 }

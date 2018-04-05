@@ -12,17 +12,52 @@
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
+    <link href="https://fonts.googleapis.com/css?family=Chicle" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
     <!-- Custom styles for this template -->
     <style>
+        body {
+            font-family: 'Chicle', cursive;
+            background-color: #0b0c10;
+            color: #66fcf1;
+        }
+
+        a {
+            color: #66fcf1;
+            text-decoration: underline;
+        }
+
+        h1, .h1 {
+            font-size: 5em;
+        }
+
+        h2, .h2 {
+            font-size: 3em;
+        }
+
+        .col-wonderland {
+            /*color: black;*/
+            text-align: center;
+        }
+
         :root {
             --jumbotron-padding-y: 3rem;
+        }
+        .navbar {
+            font-size: 2em;
+            color: white;
+        }
+        .navbar a {
+
+            text-decoration: none;
         }
 
         .jumbotron {
             padding-top: var(--jumbotron-padding-y);
             padding-bottom: var(--jumbotron-padding-y);
             margin-bottom: 0;
-            background-color: #fff;
+            /*background-color: #fff;*/
         }
         @media (min-width: 768px) {
             .jumbotron {
@@ -52,6 +87,28 @@
             margin-bottom: .25rem;
         }
 
+        .row-profile-avatar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+        }
+
+        figure.profile-avatar  {
+
+        }
+        figure.profile-avatar > img {
+            width: 200px;
+            border-radius: 50%;
+            border: 10px solid #66fcf1;
+            margin: 0 auto;
+            display: table;
+        }
+        figure.profile-avatar .figure-caption {
+            text-align: center;
+            font-size: 2em;
+        }
+
         .box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
     </style>
 </head>
@@ -59,25 +116,7 @@
 <body>
 
 <header>
-    <div class="collapse bg-dark" id="navbarHeader">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-8 col-md-7 py-4">
-                    <h4 class="text-white">About</h4>
-                    <p class="text-muted">about the project</p>
-                </div>
-                <div class="col-sm-4 offset-md-1 py-4">
-                    <h4 class="text-white">Contact</h4>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="text-white">Follow on Twitter</a></li>
-                        <li><a href="#" class="text-white">Like on Facebook</a></li>
-                        <li><a href="#" class="text-white">Email me</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="navbar navbar-dark bg-dark box-shadow">
+    <div class="navbar navbar-dark">
         <div class="container d-flex justify-content-between">
             <a href="#" class="navbar-brand d-flex align-items-center">
                 <strong><span style="font-size:1.3em">&#9786;</span> My Wonderland</strong>
@@ -108,27 +147,46 @@
 
     {% if logged == true %}
         <div class="container">
-            <figure class="profile-avatar">
-                <img src="assets/images/avatar-thiago-colares.JPG" alt="">
-            </figure>
-            <img src="{{ me.spotify }}" alt="Avatar">
-            {{ me.country }}: {{ me.displayName }}
-
-            <div class="row" style="height: 480px; width: 600px">
-                {% for artist in topArtists %}
-                    {#<li>[{{ artist.songkickId }}] {{ artist.name }} <img src="{{ artist.avatar }}" alt="" style="width: 100px; height: 100px"></li>#}
-                    <img src="{{ artist.avatar }}" alt="" class="img-fluid" style="width: 120px; height: 120px">
-                {% endfor %}
-
+            <div class="row">
+                <div class="col row-profile-avatar">
+                <figure class="profile-avatar">
+                    <img src="{{ me.spotify }}" alt="Avatar of {{ me.displayName }}"/>
+                </figure>
+                </div>
             </div>
             <div class="row">
-                <ol>
-                {% for land in report %}
-                    <li>{{ land.city }}, {{ land.country }}</li>
-                {% endfor %}
-                </ol>
-
+                <div class="col col-wonderland">
+                    <h2>{{ me.displayName }}, your wonderland is</h2>
+                    <h1>{{ report.0.city }}.</h1>
+                    <p class="h3">This is where there're more concerts performed by the artists you love.</p>
+                </div>
             </div>
+            <br>
+            <br>
+            <div class="row" style="color: white">
+                <div class="col">
+                    <h3 style="text-align: center">But you'd love these places too:</h3>
+                    <div style="display: flex; justify-content: center">
+                        <ol class="h3" start="2">
+                            {% for land in report %}
+                                {% if not loop.first %}
+                                    <li>{{ land.city }}, {{ land.country }}</li>
+                                {% endif %}
+                            {% endfor %}
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+
+            {#<div class="row" style="height: 480px; width: 600px">#}
+                {#{% for artist in topArtists %}#}
+                    {#<li>[{{ artist.songkickId }}] {{ artist.name }} <img src="{{ artist.avatar }}" alt="" style="width: 100px; height: 100px"></li>#}
+                    {#<img src="{{ artist.avatar }}" alt="" class="img-fluid" style="width: 120px; height: 120px; -webkit-filter: sepia(1);#}
+  {#filter: sepia(1); ">#}
+                {#{% endfor %}#}
+
+            {#</div>#}
         </div>
     {% endif %}
 
@@ -136,11 +194,11 @@
 
 <footer class="text-muted">
     <div class="container">
-        <p class="float-right">
-            <a href="#">Back to top</a>
-        </p>
-        <p>.... footer ... </p>
-        <p>Visit <a href="http://colar.es">colar.es</a></p>
+        {#<p class="float-right">#}
+            {#<a href="#">Back to top</a>#}
+        {#</p>#}
+        <p>My Wonderland finds the place where there're more concerts performed by the artists you love.</p>
+        <p>Made with ♫ by <a href="http://colar.es">Thiago Colares</a></p>
     </div>
 </footer>
 
