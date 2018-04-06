@@ -1,140 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+{% extends "layouts/base.twig" %}
 
-    <title>My Wonderland</title>
-
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-    <link href="https://fonts.googleapis.com/css?family=Chicle" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css"
-          integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1" crossorigin="anonymous">
-
-    <!-- Custom styles for this template -->
-    <style>
-        body {
-            font-family: 'Chicle', cursive;
-            background-color: #0b0c10;
-            color: #66fcf1;
-        }
-
-        a {
-            color: #66fcf1;
-            text-decoration: underline;
-        }
-
-        a.btn {
-            text-decoration: none;
-        }
-
-        h1, .h1 {
-            font-size: 5em;
-        }
-
-        h2, .h2 {
-            font-size: 3em;
-        }
-
-        .row-center {
-            text-align: center;
-        }
-
-        .col-wonderland {
-            /*color: black;*/
-            text-align: center;
-        }
-
-        .navbar {
-            font-size: 2em;
-            color: white;
-        }
-
-        .navbar a {
-
-            text-decoration: none;
-        }
-
-        .text-muted {
-            color: #2c5d57 !important;
-        }
-        footer {
-            padding-top: 3rem;
-            padding-bottom: 3rem;
-            text-align: center;
-        }
-
-        footer p {
-            margin-bottom: .25rem;
-        }
-
-        .row-profile-avatar {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 200px;
-        }
-
-        figure.profile-avatar > img {
-            width: 200px;
-            border-radius: 50%;
-            border: 10px solid #66fcf1;
-            margin: 0 auto;
-            display: table;
-        }
-    </style>
-</head>
-
-<body>
-
-<header>
-    <div class="navbar navbar-dark">
-        <div class="container d-flex justify-content-between">
-            <a href="#" class="navbar-brand d-flex align-items-center">
-                <strong><i class="fas fa-heart"></i> My Wonderland</strong>
-            </a>
-            {% if logged == true %}
-                <a class="btn btn-outline-light" href="/logout">End session</a>
-            {% endif %}
-        </div>
+{% block content %}
+<div class="row row-center">
+    <div class="col">
+        <h1>
+            <i class="fas fa-headphones"></i> + <i class="far fa-compass"></i> = <i
+                    class="fas fa-heart"></i>
+        </h1>
+        <h2 class="jumbotron-heading">Find a place to live</h2>
+        <h3>where there're more concerts performed by the artists you love.</h3>
+        <p class="h4 text-muted">Based on Spotify + Songkick.</p>
+        <br>
+        <p>
+            <a href="/auth" class="btn btn-success btn-lg"><i class="fab fa-spotify"></i> Log in with
+                Spotify</a>
+        </p>
     </div>
-</header>
-
-<main role="main">
-    <div class="container">
-        <div class="row row-center">
-            <div class="col">
-                <h1>
-                    <i class="fas fa-headphones"></i> + <i class="far fa-compass"></i> = <i
-                            class="fas fa-heart"></i>
-                </h1>
-                <h2 class="jumbotron-heading">Find a place to live</h2>
-                <h3>where there're more concerts performed by the artists you love.</h3>
-                <p class="h4 text-muted">Based on Spotify + Songkick.</p>
-                <br>
-                <p>
-                    <a href="/auth" class="btn btn-success btn-lg"><i class="fab fa-spotify"></i> Log in with
-                        Spotify</a>
-                </p>
-            </div>
-        </div>
-    </div>
-</main>
-
-<footer>
-    <div class="container text-muted">
-        <p>My Wonderland finds the place where there're more concerts performed by the artists you love.</p>
-        <p>P.s.: hold your horses! This is still a naive math based on your Spotify top favorites and Songkick
-            calendar. </p>
-        <p>Made with <span style="color: Tomato"><i class="fas fa-headphones"></i> + <i class="fas fa-heart"></i></span>
-            by <a href="http://colar.es">Thiago Colares</a></p>
-    </div>
-</footer>
-
-</body>
-</html>
+</div>
+{% endblock %}

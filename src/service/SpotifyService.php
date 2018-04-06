@@ -5,6 +5,7 @@
  * Date: 31/03/18
  * Time: 18:47
  */
+
 namespace MyWonderland\Service;
 
 use GuzzleHttp\Client;
@@ -92,7 +93,7 @@ class SpotifyService
             'headers' => [
                 'Authorization' => 'Bearer ' . $token->getAccessToken()
             ]
-        ], md5($token->getAccessToken()) );
+        ], md5($token->getAccessToken()));
         return new SpotifyMe(
             $response['country'],
             $response['display_name'],
@@ -106,9 +107,9 @@ class SpotifyService
             'headers' => [
                 'Authorization' => 'Bearer ' . $token->getAccessToken()
             ]
-        ], md5($token->getAccessToken()) );
+        ], md5($token->getAccessToken()));
         $topArtists = [];
-        foreach($response['items'] as $artist) {
+        foreach ($response['items'] as $artist) {
             $topArtists[] = new Artist($artist['name'], $artist['images'][1]['url']);
         }
         return $topArtists;

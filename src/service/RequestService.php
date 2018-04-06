@@ -27,7 +27,6 @@ class RequestService
     }
 
 
-
     /**
      * @param $method
      * @param string $uri
@@ -41,28 +40,22 @@ class RequestService
         $cachedString = $this->instanceCache->getItem($cacheKey);
 
         if (is_null($cachedString->get())) {
-
             $client = new Client();
             $res = $client->request($method, $uri , $options);
-            // Não estou cacheando o res porque na deserialização, o
-            // [stream:GuzzleHttp\Psr7\Response:private] => GuzzleHttp\Psr7\Stream Object (
-            //    [stream:GuzzleHttp\Psr7\Stream:private] => Resource id #79
-            //
-            // tá virando
-            // [stream:GuzzleHttp\Psr7\Response:private] => GuzzleHttp\Psr7\Stream Object (
-            //    [stream:GuzzleHttp\Psr7\Stream:private] => 0
-
             $content = json_decode( $res->getBody()->getContents(), true);
 
-            $cachedString->set($content)->expiresAfter(30 * 24 * 3600);//in seconds, also accepts Datetime. Coloquei 1 ano
-            $this->instanceCache->save($cachedString); // Save the cache item just like you do with doctrine and entities
+            //in seconds, also accepts Datetime
+            $cachedString->set($content)->expiresAfter(30 * 24 * 3600);
+
+            // Save the cache item just like you do with doctrine and entities
+            $this->instanceCache->save($cachedString);
 
             // "FIRST LOAD // WROTE OBJECT TO CACHE // RELOAD THE PAGE AND SEE // ";
             return $cachedString->get();
         }
 
         // "READ FROM CACHE // ";
-        return $cachedString->get();// Will print 'First product'
+        return $cachedString->get();
     }
 
 }
