@@ -9,8 +9,9 @@
 require_once __DIR__ . '/bootstrap.php';
 
 /**
- * Routes
+ * Simple handmade router and dispatcher routines :)
  */
+
 $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
     $r->addRoute('GET', '/', \MyWonderland\Controller\HomeController::class . ':index');
     $r->addRoute('GET', '/report', \MyWonderland\Controller\HomeController::class . ':report');
