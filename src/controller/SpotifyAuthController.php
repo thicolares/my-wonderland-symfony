@@ -44,7 +44,7 @@ class SpotifyAuthController extends AbstractController
         }
 
         $this->storeManager->set('token', $this->spotifyService->requestToken($code));
-        header('Location: /');
+        header('Location: /report');
     }
 
 

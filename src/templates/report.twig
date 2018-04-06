@@ -107,20 +107,35 @@
 
 <main role="main">
     <div class="container">
-        <div class="row row-center">
-            <div class="col">
-                <h1>
-                    <i class="fas fa-headphones"></i> + <i class="far fa-compass"></i> = <i
-                            class="fas fa-heart"></i>
-                </h1>
-                <h2 class="jumbotron-heading">Find a place to live</h2>
-                <h3>where there're more concerts performed by the artists you love.</h3>
+        <div class="row">
+            <div class="col row-profile-avatar">
+                <figure class="profile-avatar">
+                    <img src="{{ me.spotify }}" alt="Avatar of {{ me.displayName }}"/>
+                </figure>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-wonderland">
+                <h2>{{ me.displayName }}, your wonderland is</h2>
+                <h1>{{ report.0.city }}.</h1>
+                <p class="h3">This is where there're more concerts performed by the artists you love.</p>
                 <p class="h4 text-muted">Based on Spotify + Songkick.</p>
-                <br>
-                <p>
-                    <a href="/auth" class="btn btn-success btn-lg"><i class="fab fa-spotify"></i> Log in with
-                        Spotify</a>
-                </p>
+            </div>
+        </div>
+        <br>
+        <br>
+        <div class="row" style="color: white">
+            <div class="col">
+                <h3 style="text-align: center">But you'd love these places too:</h3>
+                <div style="display: flex; justify-content: center">
+                    <ol class="h3" start="2">
+                        {% for land in report %}
+                            {% if not loop.first %}
+                                <li>{{ land.city }}, {{ land.country }}</li>
+                            {% endif %}
+                        {% endfor %}
+                    </ol>
+                </div>
             </div>
         </div>
     </div>
