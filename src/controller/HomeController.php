@@ -1,13 +1,12 @@
 <?php
+namespace MyWonderland\Controller;
+
 /**
  * Created by PhpStorm.
  * User: thiago
  * Date: 31/03/18
  * Time: 20:50
  */
-
-namespace MyWonderland\Controller;
-
 
 use MyWonderland\Domain\Manager\StorageManager;
 use MyWonderland\Domain\Model\Artist;

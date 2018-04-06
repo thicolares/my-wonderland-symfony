@@ -37,7 +37,7 @@ class SpotifyAuthController extends AbstractController
 
     public function callback($state, $code = null, $error = null)
     {
-        // @todo check state against SPOTIFY_CALLBACK_STATE
+        // @todo check state against SPOTIFY_CALLBACK_STATE using a middleware
 
         if($error !== null) {
             header('Location: /');

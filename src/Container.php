@@ -68,6 +68,7 @@ class Container
         }
     }
 
+
     public function getHomeController() {
         return new HomeController(
             new SessionManager(),
@@ -77,6 +78,7 @@ class Container
         );
     }
 
+
     public function getSpotifyAuthController() {
         return new SpotifyAuthController(
             new SessionManager(),
@@ -84,6 +86,5 @@ class Container
             new SpotifyService(new RequestService())
         );
     }
-
 
 }

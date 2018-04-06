@@ -1,11 +1,12 @@
 <?php
+namespace MyWonderland\Domain\Manager;
+
 /**
  * Created by PhpStorm.
  * User: thiago
  * Date: 01/04/18
  * Time: 10:56
  */
-namespace MyWonderland\Domain\Manager;
 
 /**
  * Class SessionManager
