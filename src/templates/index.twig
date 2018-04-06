@@ -5,15 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../../../favicon.ico">
 
     <title>My Wonderland</title>
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <link href="https://fonts.googleapis.com/css?family=Chicle" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css"
+          integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1" crossorigin="anonymous">
 
     <!-- Custom styles for this template -->
     <style>
@@ -27,6 +28,7 @@
             color: #66fcf1;
             text-decoration: underline;
         }
+
         a.btn {
             text-decoration: none;
         }
@@ -39,51 +41,32 @@
             font-size: 3em;
         }
 
+        .row-center {
+            text-align: center;
+        }
+
         .col-wonderland {
             /*color: black;*/
             text-align: center;
         }
 
-        :root {
-            --jumbotron-padding-y: 3rem;
-        }
         .navbar {
             font-size: 2em;
             color: white;
         }
+
         .navbar a {
 
             text-decoration: none;
         }
 
-        .jumbotron {
-            padding-top: var(--jumbotron-padding-y);
-            padding-bottom: var(--jumbotron-padding-y);
-            margin-bottom: 0;
-            /*background-color: #fff;*/
+        .text-muted {
+            color: #2c5d57 !important;
         }
-        @media (min-width: 768px) {
-            .jumbotron {
-                padding-top: calc(var(--jumbotron-padding-y) * 2);
-                padding-bottom: calc(var(--jumbotron-padding-y) * 2);
-            }
-        }
-
-        .jumbotron p:last-child {
-            margin-bottom: 0;
-        }
-
-        .jumbotron-heading {
-            font-weight: 300;
-        }
-
-        .jumbotron .container {
-            max-width: 40rem;
-        }
-
         footer {
             padding-top: 3rem;
             padding-bottom: 3rem;
+            text-align: center;
         }
 
         footer p {
@@ -97,9 +80,6 @@
             height: 200px;
         }
 
-        figure.profile-avatar  {
-
-        }
         figure.profile-avatar > img {
             width: 200px;
             border-radius: 50%;
@@ -107,17 +87,6 @@
             margin: 0 auto;
             display: table;
         }
-        figure.profile-avatar .figure-caption {
-            text-align: center;
-            font-size: 2em;
-        }
-
-        footer {
-            color: #2c5d57;
-            text-align: center;
-        }
-
-        .box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
     </style>
 </head>
 
@@ -127,12 +96,8 @@
     <div class="navbar navbar-dark">
         <div class="container d-flex justify-content-between">
             <a href="#" class="navbar-brand d-flex align-items-center">
-                <strong>
-                    <i class="fas fa-heart"></i>  My Wonderland</strong>
+                <strong><i class="fas fa-heart"></i> My Wonderland</strong>
             </a>
-            {#<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">#}
-                {#<span class="navbar-toggler-icon"></span>#}
-            {#</button>#}
             {% if logged == true %}
                 <a class="btn btn-outline-light" href="/logout">End session</a>
             {% endif %}
@@ -141,34 +106,31 @@
 </header>
 
 <main role="main">
-    {% if logged == false %}
-        <section class=" text-center">
-            <div class="container">
-                <div class="row">
-                    <div class="col">
-                        <h1>
-                            <i class="fas fa-headphones"></i> + <i class="far fa-compass"></i> = <i class="fas fa-heart"></i>
-                        </h1>
-                        <h2 class="jumbotron-heading">Find a place to live</h2>
-                        <h3>where there're more concerts performed by the artists you love.</h3>
-                        <br>
-                        <p>
-                            <a href="/auth" class="btn btn-success btn-lg"><i class="fab fa-spotify"></i> Log in with Spotify</a>
-                        </p>
-                    </div>
+    <div class="container">
+        {% if logged == false %}
+            <div class="row row-center">
+                <div class="col">
+                    <h1>
+                        <i class="fas fa-headphones"></i> + <i class="far fa-compass"></i> = <i
+                                class="fas fa-heart"></i>
+                    </h1>
+                    <h2 class="jumbotron-heading">Find a place to live</h2>
+                    <h3>where there're more concerts performed by the artists you love.</h3>
+                    <p class="h4 text-muted">Based on Spotify + Songkick.</p>
+                    <br>
+                    <p>
+                        <a href="/auth" class="btn btn-success btn-lg"><i class="fab fa-spotify"></i> Log in with
+                            Spotify</a>
+                    </p>
                 </div>
             </div>
-        </section>
-    {% endif %}
-
-
-    {% if logged == true %}
-        <div class="container">
+        {% endif %}
+        {% if logged == true %}
             <div class="row">
                 <div class="col row-profile-avatar">
-                <figure class="profile-avatar">
-                    <img src="{{ me.spotify }}" alt="Avatar of {{ me.displayName }}"/>
-                </figure>
+                    <figure class="profile-avatar">
+                        <img src="{{ me.spotify }}" alt="Avatar of {{ me.displayName }}"/>
+                    </figure>
                 </div>
             </div>
             <div class="row">
@@ -176,6 +138,7 @@
                     <h2>{{ me.displayName }}, your wonderland is</h2>
                     <h1>{{ report.0.city }}.</h1>
                     <p class="h3">This is where there're more concerts performed by the artists you love.</p>
+                    <p class="h4 text-muted">Based on Spotify + Songkick.</p>
                 </div>
             </div>
             <br>
@@ -194,29 +157,19 @@
                     </div>
                 </div>
             </div>
+        {% endif %}
+    </div>
 
-
-            {#<div class="row" style="height: 480px; width: 600px">#}
-                {#{% for artist in topArtists %}#}
-                    {#<li>[{{ artist.songkickId }}] {{ artist.name }} <img src="{{ artist.avatar }}" alt="" style="width: 100px; height: 100px"></li>#}
-                    {#<img src="{{ artist.avatar }}" alt="" class="img-fluid" style="width: 120px; height: 120px; -webkit-filter: sepia(1);#}
-  {#filter: sepia(1); ">#}
-                {#{% endfor %}#}
-
-            {#</div>#}
-        </div>
-    {% endif %}
 
 </main>
 
-<footer >
-    <div class="container">
-        {#<p class="float-right">#}
-            {#<a href="#">Back to top</a>#}
-        {#</p>#}
+<footer>
+    <div class="container text-muted">
         <p>My Wonderland finds the place where there're more concerts performed by the artists you love.</p>
-        <p>P.s.: hold your horses! This is still a naive math based on your Spotify top favorites and Songkick calendar. </p>
-        <p>Made with <span style="color: Tomato"><i class="fas fa-headphones"></i> + <i class="fas fa-heart"></i></span> by <a href="http://colar.es">Thiago Colares</a></p>
+        <p>P.s.: hold your horses! This is still a naive math based on your Spotify top favorites and Songkick
+            calendar. </p>
+        <p>Made with <span style="color: Tomato"><i class="fas fa-headphones"></i> + <i class="fas fa-heart"></i></span>
+            by <a href="http://colar.es">Thiago Colares</a></p>
     </div>
 </footer>
 
