@@ -39,35 +39,44 @@ class SpotifyService
     /**
      * @return string
      */
-    public function getAuthUri()
+    /**
+     * @param $baseUri
+     * @param $spotifyClientId
+     * @param $spotifyCallBackState
+     * @return string
+     */
+    public function getAuthUri($baseUri, $spotifyClientId, $spotifyCallBackState)
     {
         $scopes = 'user-read-private user-read-email user-top-read';
-        $queryString = '?client_id=' . getenv('SPOTIFY_CLIENT_ID') .
+        $queryString = "?client_id=$spotifyClientId" .
             '&response_type=code' .
             '&show_dialog=true' .
-            '&redirect_uri=' . rawurlencode(getenv('BASE_URI') . self::REDIRECT_URI) .
+            '&redirect_uri=' . rawurlencode($baseUri . self::REDIRECT_URI) .
             ($scopes ? '&scope=' . rawurlencode($scopes) : '') .
-            '&state=' . getenv('SPOTIFY_CALLBACK_STATE');
+            "&state=$spotifyCallBackState";
         return self::BASE_AUTH_URI . $queryString;
     }
 
 
     /**
      * @param $code
+     * @param $baseUri
+     * @param $spotifyClientId
+     * @param $spotifyClientSecret
      * @return SpotifyToken
      */
-    public function requestToken($code)
+    public function requestToken($code, $baseUri, $spotifyClientId, $spotifyClientSecret)
     {
         $client = new Client();
         $requestBody = [
             'form_params' => [
                 'grant_type' => 'authorization_code',
                 'code' => $code,
-                'redirect_uri' => getenv('BASE_URI') . self::REDIRECT_URI
+                'redirect_uri' => $baseUri . self::REDIRECT_URI
             ],
             'headers' => [
                 'Authorization' => 'Basic  ' .
-                    base64_encode(getenv('SPOTIFY_CLIENT_ID') . ':' . getenv('SPOTIFY_CLIENT_SECRET'))
+                    base64_encode("$spotifyClientId:$spotifyClientSecret")
             ]
         ];
         $response = $client->request('POST', self::TOKEN_URI, $requestBody, self::TOKEN_URI . \json_encode($requestBody) );
