@@ -45,10 +45,19 @@ class SongkickService
             self::BASE_URI . $queryString, [], $queryStringWOKey);
 
         // @todo check if resultsPage -> status is ok
+        if ($res['resultsPage']['totalEntries'] === 0) {
+            return null;
+        }
 
         return $res['resultsPage']['results']['artist'][0]['id'];
     }
 
+
+    /**
+     * @param $songkickApiKey
+     * @param $artistId
+     * @return array
+     */
     public function getArtistUpcomingEvents($songkickApiKey, $artistId)
     {
         $queryStringWOKey = '/artists/' . $artistId . '/calendar.json';

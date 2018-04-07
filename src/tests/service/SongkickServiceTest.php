@@ -13,11 +13,10 @@ use MyWonderland\Service\SongkickService;
 
 class SongkickServiceTest extends \PHPUnit\Framework\TestCase
 {
-
     /**
      * @test
      */
-    public function getArtistIdByNameTest()
+    public function returnArtistIdByNameTest()
     {
         $requestServiceMock = $this->getMockBuilder(RequestService::class)
             ->setMethods(['requestContent'])
@@ -29,6 +28,41 @@ class SongkickServiceTest extends \PHPUnit\Framework\TestCase
         $songkickService = new SongkickService($requestServiceMock);
 
         $this->assertEquals(417271, $songkickService->getArtistIdByName('a-key', 'an-artist'));
+    }
+
+
+    /**
+     * @test
+     */
+    public function returnNullOnNoArtistFoundByNameTest()
+    {
+        $requestServiceMock = $this->getMockBuilder(RequestService::class)
+            ->setMethods(['requestContent'])
+            ->getMock();
+        $requestServiceMock->expects($this->once())
+            ->method('requestContent')
+            ->willReturn($this->artistNameRequestEmptyResponseMock());
+
+        $songkickService = new SongkickService($requestServiceMock);
+
+        $this->assertEquals(null, $songkickService->getArtistIdByName('a-key', 'an-artist'));
+    }
+
+
+    /**
+     * @return array
+     */
+    private function artistNameRequestEmptyResponseMock()
+    {
+        return [
+            "resultsPage" => [
+                "status" => 'ok',
+                "results" => [],
+                "perPage" => 1,
+                "page" => 1,
+                "totalEntries" => 0,
+            ]
+        ];
     }
 
 
