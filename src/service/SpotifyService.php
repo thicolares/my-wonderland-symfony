@@ -59,7 +59,7 @@ class SpotifyService
     public function requestToken($code)
     {
         $client = new Client();
-        $response = $client->request('POST', self::TOKEN_URI, [
+        $requestBody = [
             'form_params' => [
                 'grant_type' => 'authorization_code',
                 'code' => $code,
@@ -69,7 +69,8 @@ class SpotifyService
                 'Authorization' => 'Basic  ' .
                     base64_encode(getenv('SPOTIFY_CLIENT_ID') . ':' . getenv('SPOTIFY_CLIENT_SECRET'))
             ]
-        ]);
+        ];
+        $response = $client->request('POST', self::TOKEN_URI, $requestBody, self::TOKEN_URI . \json_encode($requestBody) );
 
         // @todo use guzzle options
         $responseBody = \json_decode($response->getBody()->getContents(), true);
@@ -89,11 +90,12 @@ class SpotifyService
      */
     public function requestMe(SpotifyToken $token)
     {
-        $response = $this->requestService->requestContent('GET', 'https://api.spotify.com/v1/me', [
+        $uri = 'https://api.spotify.com/v1/me';
+        $response = $this->requestService->requestContent('GET', $uri, [
             'headers' => [
                 'Authorization' => 'Bearer ' . $token->getAccessToken()
             ]
-        ], md5($token->getAccessToken()));
+        ], $uri . $token->getAccessToken() );
         return new SpotifyMe(
             $response['country'],
             $response['display_name'],
@@ -103,11 +105,12 @@ class SpotifyService
 
     public function requestTopArtists(SpotifyToken $token)
     {
-        $response = $this->requestService->requestContent('GET', self::BASE_API . '/me/top/artists', [
+        $uri = self::BASE_API . '/me/top/artists';
+        $response = $this->requestService->requestContent('GET', $uri, [
             'headers' => [
                 'Authorization' => 'Bearer ' . $token->getAccessToken()
             ]
-        ], md5($token->getAccessToken()));
+        ], $uri . $token->getAccessToken() );
         $topArtists = [];
         foreach ($response['items'] as $artist) {
             $topArtists[] = new Artist($artist['name'], $artist['images'][1]['url']);
