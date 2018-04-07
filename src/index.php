@@ -33,11 +33,10 @@ callController($routeInfo, $_SERVER['QUERY_STRING']);
  * @return bool|string Ex.? /callback
  */
 function extractAction($uri) {
-    $action = $uri;
     if (false !== $pos = strpos($uri, '?')) {
-        $action = substr($uri, 0, $pos);
+        return substr($uri, 0, $pos);
     }
-    return $action;
+    return $uri;
 }
 
 
