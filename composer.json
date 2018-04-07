@@ -3,7 +3,6 @@
     "description": "Find the best place for you live regarding the music you love",
     "type": "project",
     "require": {
-        "webonyx/graphql-php": "^0.11.5",
         "vlucas/phpdotenv": "^2.4",
         "guzzlehttp/guzzle": "^6.3",
         "phpFastCache/phpFastCache": "^6.1",
