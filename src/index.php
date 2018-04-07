@@ -9,7 +9,7 @@
 require_once __DIR__ . '/bootstrap.php';
 
 /**
- * Simple handmade router and dispatcher routines :)
+ * Simple handmade router and dispatcher :)
  */
 
 $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
@@ -20,20 +20,26 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
     $r->addRoute('GET', '/logout', \MyWonderland\Controller\SpotifyAuthController::class . ':logout');
 });
 
-// Fetch method and URI from somewhere
-$httpMethod = $_SERVER['REQUEST_METHOD'];
-$uri = $_SERVER['REQUEST_URI'];
-$queryStringVars = [];
-$queryString = '';
 
-// Strip query string (?foo=bar) and decode URI
-if (false !== $pos = strpos($uri, '?')) {
-    $queryString = substr($uri, $pos+1);
-    parse_str($queryString, $queryStringVars);
-    $uri = substr($uri, 0, $pos);
+$routeInfo = $dispatcher->dispatch(
+    $_SERVER['REQUEST_METHOD'],
+    rawurldecode( extractAction($_SERVER['REQUEST_URI']))
+);
+callController($routeInfo, $_SERVER['QUERY_STRING']);
+
+
+/**
+ * @param string $uri Ex.: /callback?code=bli&test=3
+ * @return bool|string Ex.? /callback
+ */
+function extractAction($uri) {
+    $action = $uri;
+    if (false !== $pos = strpos($uri, '?')) {
+        $action = substr($uri, 0, $pos);
+    }
+    return $action;
 }
-$uri = rawurldecode($uri);
-$routeInfo = $dispatcher->dispatch($httpMethod, $uri);
+
 
 /**
  * @param $class
@@ -56,30 +62,37 @@ function sortParams($class, $method, $allVars)
             $sortedVars[$param->getName()] = $param->getDefaultValue();
             continue;
         }
-        throw new \Exception("Missed {$param->getName()} param.", 1522882396);
+        throw new \Exception("Missed the '{$param->getName()}'' param.", 1522882396);
     }
     return $sortedVars;
 }
 
-switch ($routeInfo[0]) {
-    case FastRoute\Dispatcher::NOT_FOUND:
-        print "404 Not Found";
-        break;
-    case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
-        $allowedMethods = $routeInfo[1];
-        print "405 Not Allowed";
-        break;
-    case FastRoute\Dispatcher::FOUND:
-        $handler = $routeInfo[1];
-        $vars = $routeInfo[2];
-        list($class, $method) = explode(":", $handler, 2);
-        $container = new \MyWonderland\Container();
 
-        parse_str($queryString, $queryString);
+/**
+ * @param $routeInfo
+ * @param $queryString
+ */
+function callController($routeInfo, $queryString)
+{
+    switch ($routeInfo[0]) {
+        case FastRoute\Dispatcher::NOT_FOUND:
+            print "404 Not Found";
+            break;
+        case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
+            $allowedMethods = $routeInfo[1];
+            print "405 Not Allowed";
+            break;
+        case FastRoute\Dispatcher::FOUND:
+            $handler = $routeInfo[1];
+            $vars = $routeInfo[2];
+            list($class, $method) = explode(":", $handler, 2);
+            $container = new \MyWonderland\Container();
 
-        $allVars = $vars + $queryStringVars;
-        $sortedVars = sortParams($class, $method, $allVars);
+            parse_str($queryString, $queryStringVars);
 
-        call_user_func_array(array($container->build($class), $method), $sortedVars);
-        break;
+            $sortedVars = sortParams($class, $method, $vars + $queryStringVars);
+
+            call_user_func_array(array($container->build($class), $method), $sortedVars);
+            break;
+    }
 }
