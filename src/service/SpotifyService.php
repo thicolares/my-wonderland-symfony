@@ -37,15 +37,12 @@ class SpotifyService
 
 
     /**
-     * @return string
-     */
-    /**
-     * @param $baseUri
      * @param $spotifyClientId
      * @param $spotifyCallBackState
+     * @param $baseUri
      * @return string
      */
-    public function getAuthUri($baseUri, $spotifyClientId, $spotifyCallBackState)
+    public function getAuthUri($spotifyClientId, $spotifyCallBackState, $baseUri)
     {
         $scopes = 'user-read-private user-read-email user-top-read';
         $queryString = "?client_id=$spotifyClientId" .
@@ -59,13 +56,13 @@ class SpotifyService
 
 
     /**
-     * @param $code
-     * @param $baseUri
      * @param $spotifyClientId
      * @param $spotifyClientSecret
+     * @param $code
+     * @param $baseUri
      * @return SpotifyToken
      */
-    public function requestToken($code, $baseUri, $spotifyClientId, $spotifyClientSecret)
+    public function requestToken($spotifyClientId, $spotifyClientSecret, $code, $baseUri)
     {
         $client = new Client();
         $requestBody = [

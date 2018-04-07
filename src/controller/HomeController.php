@@ -40,6 +40,7 @@ class HomeController extends AbstractController
         $this->songkickService = $songkickService;
     }
 
+
     public function index()
     {
         // @todo Implement a middleware
@@ -52,6 +53,7 @@ class HomeController extends AbstractController
             'logged' => $logged
         ]);
     }
+    
 
     public function report()
     {
@@ -73,8 +75,10 @@ class HomeController extends AbstractController
             /**
              * @var $artist Artist
              */
-            $artist->songkickId = $this->songkickService->getArtistIdByName($artist->name);
-            $artistEvents = $this->songkickService->getArtistUpcomingEvents($artist->songkickId);
+            $artist->songkickId = $this->songkickService->getArtistIdByName(
+                getenv('SONGKICK_API_KEY'), $artist->name);
+            $artistEvents = $this->songkickService->getArtistUpcomingEvents(
+                getenv('SONGKICK_API_KEY'), $artist->songkickId);
             if($artistEvents) {
                 $count += count($artistEvents);
                 $events = array_merge($events, $artistEvents);

@@ -32,9 +32,9 @@ class SpotifyAuthController extends AbstractController
     public function auth()
     {
         header('Location: ' . $this->spotifyService->getAuthUri(
-            getenv('BASE_URI'),
             getenv('SPOTIFY_CLIENT_ID'),
-            getenv('SPOTIFY_CALLBACK_STATE')
+            getenv('SPOTIFY_CALLBACK_STATE'),
+            getenv('BASE_URI')
         ));
     }
 
@@ -48,10 +48,10 @@ class SpotifyAuthController extends AbstractController
         }
 
         $this->storeManager->set('token', $this->spotifyService->requestToken(
-            $code,
-            getenv('BASE_URI'),
             getenv('SPOTIFY_CLIENT_ID'),
-            getenv('SPOTIFY_CLIENT_SECRET')
+            getenv('SPOTIFY_CLIENT_SECRET'),
+            $code,
+            getenv('BASE_URI')
         ));
         header('Location: /report');
     }

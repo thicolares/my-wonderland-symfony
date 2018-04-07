@@ -31,15 +31,16 @@ class SongkickService
 
 
     /**
+     * @param $songkickApiKey
      * @param $name
-     * @return string
+     * @return mixed
      */
-    public function getArtistIdByName($name)
+    public function getArtistIdByName($songkickApiKey, $name)
     {
         $queryStringWOKey = '/search/artists.json' .
             '?per_page=1' .
             '&query=' . rawurlencode($name);
-        $queryString = $queryStringWOKey . '&apikey=' . getenv('SONGKICK_API_KEY');
+        $queryString = "$queryStringWOKey&apikey=$songkickApiKey";
         $res = $this->requestService->requestContent('GET',
             self::BASE_URI . $queryString, [], $queryStringWOKey);
 
@@ -48,10 +49,10 @@ class SongkickService
         return $res['resultsPage']['results']['artist'][0]['id'];
     }
 
-    public function getArtistUpcomingEvents($artistId)
+    public function getArtistUpcomingEvents($songkickApiKey, $artistId)
     {
         $queryStringWOKey = '/artists/' . $artistId . '/calendar.json';
-        $queryString = $queryStringWOKey . '?apikey=' . getenv('SONGKICK_API_KEY');
+        $queryString = "$queryStringWOKey?apikey=$songkickApiKey";
         $res = $this->requestService->requestContent('GET',
             self::BASE_URI . $queryString, [], $queryStringWOKey);
 
