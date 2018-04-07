@@ -53,7 +53,7 @@ class HomeController extends AbstractController
             'logged' => $logged
         ]);
     }
-    
+
 
     public function report()
     {
