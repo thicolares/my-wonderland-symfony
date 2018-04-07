@@ -48,11 +48,13 @@ https://www.songkick.com/api_key_requests/new
 
 # Screenshots
 
-Welcome:
+## Welcome
 ![Welcome](docs/my-wonderland01.png "Welcome")
 
-Connect My Wonderland to your Spotify account:
+## Connect My Wonderland to your Spotify account
 ![Connect My Wonderland to your Spotify account.](docs/my-wonderland02.png "Connect My Wonderland to your Spotify account.")
 
-Find your wonderland:
+## Find your wonderland
+New York? Sweet!
+
 ![Find your wonderland](docs/my-wonderland03.png "Find your wonderland")
