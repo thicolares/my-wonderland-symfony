@@ -36,12 +36,13 @@ class SongkickService
      */
     public function getArtistIdByName($name)
     {
-        $queryString = '/search/artists.json' .
-            '?apikey=' . getenv('SONGKICK_API_KEY') .
-            '&per_page=1' .
+        $queryStringWOKey = '/search/artists.json' .
+            '?per_page=1' .
             '&query=' . rawurlencode($name);
+        $queryString = $queryStringWOKey . '&apikey=' . getenv('SONGKICK_API_KEY');
         $res = $this->requestService->requestContent('GET',
-            self::BASE_URI . $queryString, [], md5(getenv('SONGKICK_API_KEY')));
+            self::BASE_URI . $queryString, [], $queryStringWOKey);
+
         // @todo check if resultsPage -> status is ok
 
         return $res['resultsPage']['results']['artist'][0]['id'];
@@ -49,10 +50,11 @@ class SongkickService
 
     public function getArtistUpcomingEvents($artistId)
     {
-        $queryString = '/artists/' . $artistId . '/calendar.json' .
-            '?apikey=' . getenv('SONGKICK_API_KEY');
+        $queryStringWOKey = '/artists/' . $artistId . '/calendar.json';
+        $queryString = $queryStringWOKey . '?apikey=' . getenv('SONGKICK_API_KEY');
         $res = $this->requestService->requestContent('GET',
-            self::BASE_URI . $queryString, [], md5(getenv('SONGKICK_API_KEY')));
+            self::BASE_URI . $queryString, [], $queryStringWOKey);
+
         // @todo check if resultsPage -> status is ok
 
         if (!isset($res['resultsPage']['results']['event'])) {
