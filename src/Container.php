@@ -58,13 +58,10 @@ class Container
         switch ($class) {
             case HomeController::class:
                 return $this->getHomeController();
-                break;
             case SpotifyAuthController::class:
                 return $this->getSpotifyAuthController();
-                break;
             default:
                 return new $class();
-                break;
         }
     }
 
