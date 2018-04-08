@@ -76,7 +76,7 @@ class SpotifyService
                     base64_encode("$spotifyClientId:$spotifyClientSecret")
             ]
         ];
-        $response = $client->request('POST', self::TOKEN_URI, $requestBody, self::TOKEN_URI . \json_encode($requestBody) );
+        $response = $client->request('POST', self::TOKEN_URI, $requestBody, self::TOKEN_URI . \json_encode($requestBody));
 
         // @todo use guzzle options
         $responseBody = \json_decode($response->getBody()->getContents(), true);
@@ -101,7 +101,7 @@ class SpotifyService
             'headers' => [
                 'Authorization' => 'Bearer ' . $token->getAccessToken()
             ]
-        ], $uri . $token->getAccessToken() );
+        ], $uri . $token->getAccessToken());
         return new SpotifyMe(
             $response['country'],
             $response['display_name'],
@@ -116,7 +116,7 @@ class SpotifyService
             'headers' => [
                 'Authorization' => 'Bearer ' . $token->getAccessToken()
             ]
-        ], $uri . $token->getAccessToken() );
+        ], $uri . $token->getAccessToken());
         $topArtists = [];
         foreach ($response['items'] as $artist) {
             $topArtists[] = new Artist($artist['name'], $artist['images'][1]['url']);

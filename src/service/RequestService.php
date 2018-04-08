@@ -35,14 +35,14 @@ class RequestService
      * @return mixed
      */
     public function requestContent($method, $uri = '', array $options = [], $salt = '') {
-        $cacheKey = md5($method.$uri.$salt);
+        $cacheKey = md5($method . $uri . $salt);
 
         $cachedString = $this->instanceCache->getItem($cacheKey);
 
         if (is_null($cachedString->get())) {
             $client = new Client();
-            $res = $client->request($method, $uri , $options);
-            $content = json_decode( $res->getBody()->getContents(), true);
+            $res = $client->request($method, $uri, $options);
+            $content = json_decode($res->getBody()->getContents(), true);
 
             //in seconds, also accepts Datetime
             $cachedString->set($content)->expiresAfter(30 * 24 * 3600);

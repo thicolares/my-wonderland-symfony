@@ -45,7 +45,7 @@ class HomeController extends AbstractController
     {
         // @todo Implement a middleware
         $logged = $this->storeManager->has('token');
-        if($logged === true) {
+        if ($logged === true) {
             header('Location: /report');
         }
 
@@ -59,7 +59,7 @@ class HomeController extends AbstractController
     {
         // @todo Implement a middleware
         $logged = $this->storeManager->has('token');
-        if($logged !== true) {
+        if ($logged !== true) {
             header('Location: /');
         }
 
@@ -79,7 +79,7 @@ class HomeController extends AbstractController
                 getenv('SONGKICK_API_KEY'), $artist->name);
             $artistEvents = $this->songkickService->getArtistUpcomingEvents(
                 getenv('SONGKICK_API_KEY'), $artist->songkickId);
-            if($artistEvents) {
+            if ($artistEvents) {
                 $count += count($artistEvents);
                 $events = array_merge($events, $artistEvents);
             }

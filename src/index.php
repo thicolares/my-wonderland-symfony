@@ -23,7 +23,7 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
 
 $routeInfo = $dispatcher->dispatch(
     $_SERVER['REQUEST_METHOD'],
-    rawurldecode( extractAction($_SERVER['REQUEST_URI']))
+    rawurldecode(extractAction($_SERVER['REQUEST_URI']))
 );
 callController($routeInfo, $_SERVER['QUERY_STRING']);
 

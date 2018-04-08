@@ -32,8 +32,8 @@ class Ranking
              * @var $event Event
              */
             $key = $event->country . $event->city;
-            if(isset($reportAccumulator[$key])) {
-                $reportAccumulator[$key]['count']+=1;
+            if (isset($reportAccumulator[$key])) {
+                $reportAccumulator[$key]['count'] += 1;
                 return $reportAccumulator;
             }
             $reportAccumulator[$key] = [
@@ -44,11 +44,11 @@ class Ranking
             return $reportAccumulator;
         });
 
-        usort($report, function($a, $b){
-            if ($a['count'] == $b['count']){
+        usort($report, function($a, $b) {
+            if ($a['count'] == $b['count']) {
                 return 0;
             }
-            return ($a['count'] > $b['count'])? -1 : 1;
+            return ($a['count'] > $b['count']) ? -1 : 1;
         });
 
         return $report;
