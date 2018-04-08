@@ -1,6 +1,8 @@
 <?php
 namespace MyWonderland;
 
+
+
 require_once  __DIR__ . '/../vendor/autoload.php';
 
 /**
