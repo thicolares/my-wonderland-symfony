@@ -1,13 +1,23 @@
-web:
-    image: nginx:latest
-    ports:
-        - "8080:80"
-    volumes:
-        - ./src:/src
-        - ./site.conf:/etc/nginx/conf.d/site.conf
-    links:
-        - php
-php:
-    image: php:7-fpm
-    volumes:
-        - ./src:/src
+version: '2'
+
+services:
+    web:
+        image: nginx:latest
+        ports:
+            - "8080:80"
+        volumes:
+            - ./src:/src
+            - ./site.conf:/etc/nginx/conf.d/default.conf
+        networks:
+            - my-wonderland-network
+    php:
+        image: php:7-fpm
+        volumes:
+            - ./src:/src
+            - ./log.conf:/usr/local/etc/php-fpm.d/zz-log.conf
+        networks:
+            - my-wonderland-network
+
+networks:
+    my-wonderland-network:
+        driver: bridge
