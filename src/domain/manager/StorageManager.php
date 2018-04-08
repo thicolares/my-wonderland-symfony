@@ -10,11 +10,11 @@ namespace MyWonderland\Domain\Manager;
 
 interface StorageManager
 {
-    function set($key, $value);
+    public function set($key, $value);
 
-    function get($key);
+    public function get($key);
 
-    function has($key);
+    public function has($key);
 
-    function unset($key);
+    public function unset($key);
 }
