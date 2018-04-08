@@ -78,7 +78,6 @@ function callController($routeInfo, $queryString)
             print "404 Not Found";
             break;
         case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
-            $allowedMethods = $routeInfo[1];
             print "405 Not Allowed";
             break;
         case FastRoute\Dispatcher::FOUND:
