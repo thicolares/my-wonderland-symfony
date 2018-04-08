@@ -31,11 +31,11 @@ class RequestService
      * @param $method
      * @param string $uri
      * @param array $options
-     * @param string $salt a random data that is used as an additional input to a one-way function that "hashes" data
+     * @param string $cacheKey
      * @return mixed
      */
-    public function requestContent($method, $uri = '', array $options = [], $salt = '') {
-        $cacheKey = md5($method . $uri . $salt);
+    public function requestContent($method, $uri = '', array $options = [], $cacheKey = '') {
+        $cacheKey = md5($cacheKey);
 
         $cachedString = $this->instanceCache->getItem($cacheKey);
 
