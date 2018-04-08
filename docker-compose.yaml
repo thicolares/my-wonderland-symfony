@@ -1,4 +1,7 @@
 web:
-  image: nginx:latest
-  ports:
-  - "8080:80"
+    image: nginx:latest
+    ports:
+        - "8080:80"
+    volumes:
+        - ./src:/src
+        - ./site.conf:/etc/nginx/conf.d/site.conf
