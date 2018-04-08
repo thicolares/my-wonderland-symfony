@@ -17,7 +17,11 @@ services:
             - ./log.conf:/usr/local/etc/php-fpm.d/zz-log.conf
         networks:
             - my-wonderland-network
-
+    composer:
+        image: composer:latest
+        volumes:
+          - .:/app
+        command: 'true'
 networks:
     my-wonderland-network:
         driver: bridge
