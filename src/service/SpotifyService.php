@@ -76,7 +76,7 @@ class SpotifyService
                     base64_encode("$spotifyClientId:$spotifyClientSecret")
             ]
         ];
-        $response = $client->request('POST', self::TOKEN_URI, $requestBody, self::TOKEN_URI . \json_encode($requestBody));
+        $response = $client->request('POST', self::TOKEN_URI, $requestBody, \json_encode($requestBody));
 
         // @todo use guzzle options
         $responseBody = \json_decode($response->getBody()->getContents(), true);
