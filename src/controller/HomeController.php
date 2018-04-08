@@ -79,7 +79,7 @@ class HomeController extends AbstractController
                 getenv('SONGKICK_API_KEY'), $artist->name);
             $artistEvents = $this->songkickService->getArtistUpcomingEvents(
                 getenv('SONGKICK_API_KEY'), $artist->songkickId);
-            if ($artistEvents) {
+            if (!empty($artistEvents)) {
                 $count += count($artistEvents);
                 $events = array_merge($events, $artistEvents);
             }
