@@ -10,7 +10,7 @@ It matches your Spotify profile with Songkick calendar and venues in the near fu
 
 [Install Docker](https://docs.docker.com/install/)
 
-You can run the project using PHP> = 7.1, nginx or Apache, and composer. All you have to do is run <code> composer install </code> and set <code> /src </code> as the public folder for nginx or Apache.
+You can run the project using PHP> = 7.1, nginx or Apache, and composer. All you have to do is run <code> composer install </code> and set <code>/src</code> as the public folder for nginx or Apache.
 
 ### Spotify API Key
 **I'm using the new Beta API (as on Apr 7th 2018).** Apply for Spotify API key. The request is processed immediately: https://beta.developer.spotify.com/. From May 7th 2018 and on: https://developer.spotify.com/
