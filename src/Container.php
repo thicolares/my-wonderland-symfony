@@ -53,6 +53,15 @@ class Container
         return self::$shared['twig'];
     }
 
+    public function getRequestService() {
+        if (isset(self::$shared['requestService'])) {
+            return self::$shared['requestService'];
+        }
+
+        self::$shared['requestService'] = new RequestService();
+        return self::$shared['requestService'];
+    }
+
 
     public function build($class) {
         switch ($class) {
@@ -70,8 +79,8 @@ class Container
         return new HomeController(
             new SessionManager(),
             $this->getTwig(),
-            new SpotifyService(new RequestService()),
-            new SongkickService(new RequestService())
+            new SpotifyService($this->getRequestService()),
+            new SongkickService($this->getRequestService())
         );
     }
 
@@ -80,7 +89,7 @@ class Container
         return new SpotifyAuthController(
             new SessionManager(),
             $this->getTwig(),
-            new SpotifyService(new RequestService())
+            new SpotifyService($this->getRequestService())
         );
     }
 

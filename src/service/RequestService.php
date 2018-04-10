@@ -37,10 +37,14 @@ class RequestService
     public function requestContent($method, $uri = '', array $options = [], $cacheKey = '') {
         $cacheKey = md5($cacheKey);
 
+        $this->instanceCache->clear();
         $cachedString = $this->instanceCache->getItem($cacheKey);
 
         if (is_null($cachedString->get())) {
             $client = new Client();
+//            if(!isset($options['connect_timeout'])) {
+//                $options['connect_timeout'] = 10;
+//            }
             $res = $client->request($method, $uri, $options);
             $content = json_decode($res->getBody()->getContents(), true);
 

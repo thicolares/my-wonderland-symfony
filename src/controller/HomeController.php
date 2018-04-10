@@ -43,6 +43,7 @@ class HomeController extends AbstractController
 
     public function index()
     {
+        $this->storeManager->unset('token');
         // @todo Implement a middleware
         $logged = $this->storeManager->has('token');
         if ($logged === true) {
