@@ -58,41 +58,49 @@ class HomeController extends AbstractController
 
     public function report()
     {
-        // @todo Implement a middleware
-        $logged = $this->storeManager->has('token');
-        if ($logged !== true) {
-            header('Location: /');
-        }
-
-        /**
-         * @var SpotifyToken $token
-         */
-        $token = $this->storeManager->get('token');
-        $me = $this->spotifyService->requestMe($token);
-        $topArtists = $this->spotifyService->requestTopArtists($token);
-        $events = [];
-        $count = 0;
-        foreach ($topArtists as $artist) {
-            /**
-             * @var $artist Artist
-             */
-            $artist->songkickId = $this->songkickService->getArtistIdByName(
-                getenv('SONGKICK_API_KEY'), $artist->name);
-            $artistEvents = $this->songkickService->getArtistUpcomingEvents(
-                getenv('SONGKICK_API_KEY'), $artist->songkickId);
-            if (!empty($artistEvents)) {
-                $count += count($artistEvents);
-                $events = array_merge($events, $artistEvents);
+        try {
+            // @todo Implement a middleware
+            $logged = $this->storeManager->has('token');
+            if ($logged !== true) {
+                header('Location: /');
             }
-        }
-        $ranking = new Ranking($events);
-        $report = $ranking->report();
 
-        print $this->twig->render('report.twig', [
-            'logged' => $logged,
-            'me' => $me,
-            'topArtists' => $topArtists,
-            'report' => array_slice($report, 0, 10)
-        ]);
+            /**
+             * @var SpotifyToken $token
+             */
+            $token = $this->storeManager->get('token');
+            $me = $this->spotifyService->requestMe($token);
+            $topArtists = $this->spotifyService->requestTopArtists($token);
+            $events = [];
+            $count = 0;
+            foreach ($topArtists as $artist) {
+                /**
+                 * @var $artist Artist
+                 */
+                $artist->songkickId = $this->songkickService->getArtistIdByName(
+                    getenv('SONGKICK_API_KEY'), $artist->name);
+                $artistEvents = $this->songkickService->getArtistUpcomingEvents(
+                    getenv('SONGKICK_API_KEY'), $artist->songkickId);
+                if (!empty($artistEvents)) {
+                    $count += count($artistEvents);
+                    $events = array_merge($events, $artistEvents);
+                }
+            }
+            $ranking = new Ranking($events);
+            $report = $ranking->report();
+
+            print $this->twig->render('report.twig', [
+                'logged' => $logged,
+                'me' => $me,
+                'topArtists' => $topArtists,
+                'report' => array_slice($report, 0, 10)
+            ]);
+        } catch (\Exception $e) {
+            print $this->twig->render('error.twig', [
+                'code' => $e->getCode(),
+                'message' => $e->getMessage()
+            ]);
+        }
+
     }
 }
